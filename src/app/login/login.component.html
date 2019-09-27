@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="auth">
+    <div class="login">
+      <input
+        type="text"
+        name="email"
+        [(ngModel)]="loginEmail"
+        placeholder="login"
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="loginPassword"
+        placeholder="password"
+      />
+    </div>
+    <div class="registration">
+      <input
+        type="text"
+        name="name"
+        [(ngModel)]="userName"
+        placeholder="Your name"
+      />
+      <input
+        type="text"
+        name="email"
+        [(ngModel)]="registerEmail"
+        placeholder="login"
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="registerPassword"
+        placeholder="password"
+      />
+    </div>
+  </div>
+  <div class="controls">
+    <button
+      class="login_button"
+      (click)="login($event)"
+      [disabled]="!loginPassword"
+    >
+      Login
+    </button>
+    <button
+      class="register_button"
+      (click)="register($event)"
+      [disabled]="!registerPassword"
+    >
+      Register
+    </button>
+  </div>
+  <div class="error" *ngIf="error">
+    <p>Your login or password is not correct</p>
+  </div>
+  <div class="success" *ngIf="success">
+    <p>Gotcha!</p>
+  </div>
+</div>
