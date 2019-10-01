@@ -1,50 +1,24 @@
 .container {
   display: flex;
-  flex-direction: column;
-  height: 80vh;
+  flex-direction: row;
+  height: 60vh;
   justify-content: center;
   align-content: center;
 }
 
-.auth {
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-}
-
 .login,
 .registration {
-  height: 200px;
   display: flex;
   flex-direction: column;
   align-self: center;
-  border: 1px solid rgb(131, 124, 124);
 }
 
-input {
-  height: 50px;
-  width: 300px;
-  border: none;
-  padding: 10px;
-  font-size: 20px;
-}
-
-.login {
-  justify-content: space-between;
+.registration_container,
+.login_container {
+  display: flex;
 }
 
 .controls {
   display: flex;
-  width: 650px;
-  align-self: center;
-  justify-content: space-between;
-}
-
-.register_button,
-.login_button {
-  width: 320px;
-  font-size: 20px;
-  border: none;
-  background-color: #4caf50;
-  margin-top: 10px;
+  justify-content: center;
 }

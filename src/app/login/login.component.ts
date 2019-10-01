@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -7,45 +10,39 @@ import { AuthService } from '../core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @Input() title: string;
+  loginForm: FormGroup;
+  registerForm: FormGroup;
   loginEmail: string;
-  registerEmail: string;
   loginPassword: string;
+  registerEmail: string;
   registerPassword: string;
   userName: string;
   error: boolean;
   success: boolean;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private apiService: ApiService
+  ) {}
 
-  async register(event: Event): Promise<void> {
-    try {
-      const response = await this.authService.register(
-        this.registerEmail,
-        this.registerPassword,
-        this.userName
-      );
-      this.error = false;
-      this.success = true;
-      localStorage.setItem(response.data.user.name, response.data.token);
-    } catch (error) {
-      this.error = true;
-    }
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: '',
+      password: ''
+    });
+    this.registerForm = this.fb.group({
+      name: '',
+      email: '',
+      password: ''
+    });
   }
 
-  async login(event: Event): Promise<void> {
-    try {
-      const response = await this.authService.login(
-        this.loginEmail,
-        this.loginPassword
-      );
-      this.error = false;
-      this.success = true;
-    } catch (error) {
-      this.success = false;
-      this.error = true;
-    }
+  login(loginEmail: string, loginPassword: string): void {
+    this.authService.login(loginEmail, loginPassword);
   }
 
-  ngOnInit() {}
+  register(userName: string, registerEmail: string, registerPassword: string) {
+    this.authService.register(userName, registerEmail, registerPassword);
+  }
 }
