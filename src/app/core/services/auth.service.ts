@@ -22,12 +22,16 @@ export class AuthService {
     return this.isAuthorizedSubject.asObservable();
   }
 
-  async login(email: string, password: string): Promise<any> {
+  async login(email: string, password: string, rememberUserCheck: boolean): Promise<any> {
     const { user } = await this.apiService.postWithoutToken('auth/signin', {
       email,
       password
     });
     this.isAuthorizedSubject.next(true);
+    if (!rememberUserCheck) {
+
+      this.apiService.resetToken();
+    }
     this.router.navigate(['dashboard']);
     return (this.user = user);
   }

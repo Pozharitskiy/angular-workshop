@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login(loginEmail: string, loginPassword: string): void {
-    this.authService.login(loginEmail, loginPassword);
-    console.log(this.loginForm)
+  login(loginEmail: string, loginPassword: string, rememberUser: boolean): void {
+    rememberUser = this.loginForm.value.rememberUser;
+    this.authService.login(loginEmail, loginPassword, rememberUser);
   }
 
   register(userName: string, registerEmail: string, registerPassword: string) {
