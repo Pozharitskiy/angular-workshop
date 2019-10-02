@@ -11,14 +11,8 @@ import { AuthService } from '../core/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
-  loginEmail: string;
-  loginPassword: string;
-  registerEmail: string;
-  registerPassword: string;
-  userName: string;
   error: boolean;
   success: boolean;
-  rememberUser: boolean;
 
   constructor(private authService: AuthService, private fb: FormBuilder) {}
 
