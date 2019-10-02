@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -19,27 +18,30 @@ export class LoginComponent implements OnInit {
   userName: string;
   error: boolean;
   success: boolean;
+  rememberUser: boolean;
 
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private apiService: ApiService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: '',
-      password: ''
+      password: '',
+      rememberUser: false,
     });
     this.registerForm = this.fb.group({
       name: '',
       email: '',
       password: ''
     });
+
   }
 
   login(loginEmail: string, loginPassword: string): void {
     this.authService.login(loginEmail, loginPassword);
+    console.log(this.loginForm)
   }
 
   register(userName: string, registerEmail: string, registerPassword: string) {

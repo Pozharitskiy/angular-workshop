@@ -2,77 +2,36 @@
   <div class="login_container">
     <form [formGroup]="loginForm" class="login">
       <mat-form-field>
-        <input
-          #loginEmail
-          matInput
-          required
-          placeholder="email"
-          formControlName="email"
-        />
+        <input #loginEmail matInput required placeholder="email" formControlName="email" />
       </mat-form-field>
       <mat-form-field>
-        <input
-          #loginPassword
-          matInput
-          required
-          type="password"
-          placeholder="password"
-          formControlName="password"
-        />
+        <input #loginPassword matInput required type="password" placeholder="password" formControlName="password" />
       </mat-form-field>
-      <mat-checkbox>Remember me</mat-checkbox>
+      <mat-checkbox [formControl]="rememberUser">Remember me</mat-checkbox>
     </form>
   </div>
   <div class="registration_container">
     <form [formGroup]="registerForm" class="registration">
       <mat-form-field>
-        <input
-          #userName
-          matInput
-          required
-          placeholder="name"
-          formControlName="name"
-        />
+        <input #userName matInput required placeholder="name" formControlName="name" />
       </mat-form-field>
       <mat-form-field>
-        <input
-          #registerEmail
-          matInput
-          required
-          placeholder="email"
-          formControlName="email"
-        />
+        <input #registerEmail matInput required placeholder="email" formControlName="email" />
       </mat-form-field>
       <mat-form-field>
-        <input
-          #registerPassword
-          matInput
-          required
-          type="password"
-          placeholder="password"
-          formControlName="password"
-        />
+        <input #registerPassword matInput required type="password" placeholder="password" formControlName="password" />
       </mat-form-field>
     </form>
   </div>
 </div>
 <div class="controls">
-  <button
-    mat-flat-button
-    color="primary"
-    [disabled]="!loginPassword"
-    (click)="login(loginEmail.value, loginPassword.value)"
-  >
+  <button mat-flat-button color="primary" [disabled]="!loginPassword.value"
+    (click)="login(loginEmail.value, loginPassword.value)">
     Login
   </button>
-  <button
-    mat-flat-button
-    color="accent"
-    [disabled]="!registerPassword"
-    (click)="
+  <button mat-flat-button color="accent" [disabled]="!registerPassword.value" (click)="
       register(userName.value, registerEmail.value, registerPassword.value)
-    "
-  >
+    ">
     register
   </button>
 </div>
