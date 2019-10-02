@@ -25,9 +25,7 @@
           formControlName="password"
         />
 
-        <mat-error>
-          Your pass is invalid
-        </mat-error>
+        <mat-error> Error: {{ getErrorMessage('password') }} </mat-error>
       </mat-form-field>
       <mat-checkbox [formControl]="loginForm.get('rememberUser')"
         >Remember me</mat-checkbox
@@ -70,9 +68,7 @@
           Pass must be 4 of more elements
         </mat-hint>
 
-        <mat-error [hidden]="!loginPassword.value.split('').length >= 4">
-          Your pass is invalid
-        </mat-error>
+        <mat-error> Error: {{ getErrorMessage('password') }} </mat-error>
       </mat-form-field>
     </form>
   </div>

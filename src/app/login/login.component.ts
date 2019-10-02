@@ -25,25 +25,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).*$')
-        ]
-      ],
+      password: ['', [Validators.required, Validators.minLength(4)]],
       rememberUser: false
     });
     this.registerForm = this.fb.group({
       name: '',
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).*$')
-        ]
-      ]
+      password: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
@@ -64,5 +52,12 @@ export class LoginComponent implements OnInit {
     if (Error) {
       this.error = true;
     }
+  }
+
+  getErrorMessage(controlName: string) {
+    if (this.loginForm.controls[controlName].hasError('minlength')) {
+      return 'Must be at least 2 characters';
+    }
+    return 'Type your pass here';
   }
 }
