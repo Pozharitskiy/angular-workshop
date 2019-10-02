@@ -81,7 +81,7 @@
   <button
     mat-flat-button
     color="primary"
-    [disabled]="!loginPassword.value"
+    [disabled]="!loginPassword.value || !loginEmail.value"
     (click)="login(loginEmail.value, loginPassword.value)"
   >
     Login
@@ -89,7 +89,7 @@
   <button
     mat-flat-button
     color="accent"
-    [disabled]="!registerPassword.value"
+    [disabled]="!registerPassword.value || !registerEmail.value"
     (click)="
       register(userName.value, registerEmail.value, registerPassword.value)
     "
