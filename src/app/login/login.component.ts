@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../core/services/auth.service';
 
@@ -20,31 +20,49 @@ export class LoginComponent implements OnInit {
   success: boolean;
   rememberUser: boolean;
 
-  constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-  ) { }
+  constructor(private authService: AuthService, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: '',
-      password: '',
-      rememberUser: false,
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).*$')
+        ]
+      ],
+      rememberUser: false
     });
     this.registerForm = this.fb.group({
       name: '',
-      email: '',
-      password: ''
+      email: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?!.*s).*$')
+        ]
+      ]
     });
-
   }
 
-  login(loginEmail: string, loginPassword: string, rememberUser: boolean): void {
+  login(
+    loginEmail: string,
+    loginPassword: string,
+    rememberUser: boolean
+  ): void {
     rememberUser = this.loginForm.value.rememberUser;
     this.authService.login(loginEmail, loginPassword, rememberUser);
+    if (Error) {
+      this.error = true;
+    }
   }
 
   register(userName: string, registerEmail: string, registerPassword: string) {
     this.authService.register(userName, registerEmail, registerPassword);
+    if (Error) {
+      this.error = true;
+    }
   }
 }
