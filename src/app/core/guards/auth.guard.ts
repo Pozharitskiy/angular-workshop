@@ -16,25 +16,22 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.authService.isAuthorized().pipe(
-      filter(
-        isAuth => {
-          return !isUndefined(isAuth);
-        },
-        map(isAuth => {
-          if (!isAuth) {
-            console.log('qwe');
-            this.router.navigate(['login']);
-          }
-          return isAuth;
-        })
-      )
-    );
+    return this.authService.isAuthorized()
+      .pipe(
+        filter((
+          isAuth => {
+            if (!isAuth) {
+              this.router.navigate(['login']);
+            }
+            return !isUndefined(isAuth);
+          })
+        )
+      );
   }
 }

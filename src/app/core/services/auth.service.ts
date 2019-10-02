@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { ApiService } from '../services/api.service';
 import { User } from '../../core/models/user.model';
@@ -12,7 +13,7 @@ export class AuthService {
   private user: User;
   private isAuthorizedSubject = new BehaviorSubject<boolean>(undefined);
 
-  constructor(private http: HttpClient, private apiService: ApiService) {
+  constructor(private http: HttpClient, private apiService: ApiService, private router: Router) {
     const isAuthorized = !!localStorage.getItem('token');
     this.isAuthorizedSubject.next(isAuthorized);
   }
@@ -27,6 +28,7 @@ export class AuthService {
       password
     });
     this.isAuthorizedSubject.next(true);
+    this.router.navigate(['dashboard']);
     return (this.user = user);
   }
   async register(email: string, password: string, name: string): Promise<any> {
@@ -36,6 +38,8 @@ export class AuthService {
       name
     });
     this.isAuthorizedSubject.next(true);
+    this.router.navigate(['dashboard']);
+    this.apiService.resetToken();
     return (this.user = user);
   }
 }
