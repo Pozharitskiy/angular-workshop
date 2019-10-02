@@ -10,8 +10,6 @@ export class DashboardComponent implements OnInit {
   constructor(public route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      console.log(params);
-    });
+    this.route.params.subscribe(params => {});
   }
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { APIUrl } from './constants';
+import { StorageAdapterService } from './storage-adapter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class ApiService {
   private options: {
     headers: HttpHeaders;
   };
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageAdapterService
+  ) {
     const token = localStorage.getItem('token') || '';
     this.options = {
       headers: new HttpHeaders({
@@ -20,23 +24,14 @@ export class ApiService {
     };
   }
 
-  setToken(token: string): void {
-    this.options.headers.set('authorization', token);
-    localStorage.setItem('token', token);
-  }
-
-  resetToken(): void {
-    this.options.headers.delete('authorization');
-    localStorage.removeItem('token');
-  }
-
   postWithoutToken<T>(path: string, body: any): Promise<T> {
     return this.http
       .post(`${APIUrl}/${path}`, body)
       .pipe(
         map((response: any) => {
           if (response.success && response.data.token) {
-            this.setToken(response.data.token);
+            this.options.headers.set('authorization', response.data.token);
+            this.storageService.setToken(response.data.token, sessionStorage);
           }
           return response.data as T;
         })

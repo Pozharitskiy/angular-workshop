@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { StorageAdapterService } from './storage-adapter.service';
 import { ApiService } from '../services/api.service';
 import { User } from '../../core/models/user.model';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,12 @@ export class AuthService {
   private user: User;
   private isAuthorizedSubject = new BehaviorSubject<boolean>(undefined);
 
-  constructor(private http: HttpClient, private apiService: ApiService, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private apiService: ApiService,
+    private router: Router,
+    private storageService: StorageAdapterService
+  ) {
     const isAuthorized = !!localStorage.getItem('token');
     this.isAuthorizedSubject.next(isAuthorized);
   }
@@ -22,15 +29,19 @@ export class AuthService {
     return this.isAuthorizedSubject.asObservable();
   }
 
-  async login(email: string, password: string, rememberUserCheck: boolean): Promise<any> {
+  async login(
+    email: string,
+    password: string,
+    rememberUserCheck: boolean
+  ): Promise<any> {
     const { user } = await this.apiService.postWithoutToken('auth/signin', {
       email,
       password
     });
     this.isAuthorizedSubject.next(true);
-    if (!rememberUserCheck) {
-
-      this.apiService.resetToken();
+    if (rememberUserCheck) {
+      const token = this.storageService.getToken();
+      this.storageService.setToken(token, localStorage);
     }
     this.router.navigate(['dashboard']);
     return (this.user = user);
@@ -43,7 +54,6 @@ export class AuthService {
     });
     this.isAuthorizedSubject.next(true);
     this.router.navigate(['dashboard']);
-    this.apiService.resetToken();
     return (this.user = user);
   }
 }

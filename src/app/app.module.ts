@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppHttpInterceptor } from './core/services/http.interceptor';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,8 @@ import { AppHttpInterceptor } from './core/services/http.interceptor';
     CommonModule,
     LoginModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   providers: [
     {
