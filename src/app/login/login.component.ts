@@ -1,7 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { MatSnackBar } from '@angular/material';
+
 import { AuthService } from '../core/services/auth.service';
+import { ApiService } from '../core/services/api.service';
+import { error } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +18,12 @@ export class LoginComponent implements OnInit {
   error: boolean;
   success: boolean;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private apiService: ApiService,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -29,23 +38,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(
-    loginEmail: string,
-    loginPassword: string,
-    rememberUser: boolean
-  ): void {
+  login(loginEmail: string, loginPassword: string, rememberUser: boolean) {
     rememberUser = this.loginForm.value.rememberUser;
     this.authService.login(loginEmail, loginPassword, rememberUser);
-    if (Error) {
-      this.error = true;
-    }
+    this.detectAndShowErrorSnack;
   }
 
   register(userName: string, registerEmail: string, registerPassword: string) {
     this.authService.register(userName, registerEmail, registerPassword);
-    if (Error) {
-      this.error = true;
-    }
+    this.detectAndShowErrorSnack();
   }
 
   getErrorMessage(controlName: string) {
@@ -53,5 +54,19 @@ export class LoginComponent implements OnInit {
       return 'Must be at least 2 characters';
     }
     return 'Type your pass here';
+  }
+
+  openSnackBar(message, action) {
+    this.snackBar.open(message, action);
+  }
+
+  detectAndShowErrorSnack() {
+    console.log(this.apiService.isError);
+    if (this.apiService.isError) {
+      this.openSnackBar(
+        'This user is already exist or your data is incorrect',
+        'close'
+      );
+    }
   }
 }

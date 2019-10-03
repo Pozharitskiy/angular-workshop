@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
@@ -18,6 +20,7 @@ import { SharedModule } from './shared/shared.module';
     LoginModule,
     AppRoutingModule,
     RouterModule,
+    BrowserAnimationsModule,
     SharedModule
   ],
   providers: [

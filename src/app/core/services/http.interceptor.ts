@@ -27,6 +27,8 @@ export class AppHttpInterceptor implements HttpInterceptor {
           this.spinner.hide();
         },
         error => {
+          console.log('error');
+
           this.spinner.hide();
         }
       )

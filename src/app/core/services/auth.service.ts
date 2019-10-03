@@ -39,10 +39,12 @@ export class AuthService {
       password
     });
     this.isAuthorizedSubject.next(true);
+
     if (rememberUserCheck) {
       const token = this.storageService.getToken();
       this.storageService.setToken(token, localStorage);
     }
+
     this.router.navigate(['dashboard']);
     return (this.user = user);
   }
@@ -52,8 +54,10 @@ export class AuthService {
       password,
       name
     });
+
     this.isAuthorizedSubject.next(true);
     this.router.navigate(['dashboard']);
+
     return (this.user = user);
   }
 }
