@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BoardService } from '../core/services/board.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(public route: ActivatedRoute) {}
+  constructor(
+    public route: ActivatedRoute,
+    private boardService: BoardService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {});
+    this.boardService.getAllBoards();
   }
 }

@@ -38,7 +38,7 @@ export class ApiService {
     return this.http
       .post(`${APIUrl}/${path}`, body)
       .pipe(
-        catchError(this.handleError),
+        catchError(this.handleError.bind(this)),
         map((response: any) => {
           if (!response.success) {
             throw new Error();
@@ -70,7 +70,9 @@ export class ApiService {
 
   handleError(error: HttpErrorResponse) {
     this.isError = true;
-    this.snackBar.open('message', 'action');
+    console.log('this', this);
+
+    this.snackBar.open('Your data is invalid', 'I got you');
     console.log(this.isError);
     return Observable.throw(error.statusText);
   }

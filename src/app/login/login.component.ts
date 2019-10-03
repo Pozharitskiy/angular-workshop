@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../core/services/auth.service';
-import { ApiService } from '../core/services/api.service';
-import { error } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +11,8 @@ import { error } from 'util';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
-  error: boolean;
-  success: boolean;
 
-  constructor(
-    private authService: AuthService,
-    private apiService: ApiService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private authService: AuthService, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({

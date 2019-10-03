@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -20,7 +20,8 @@ import { MatIconModule } from '@angular/material';
     MatCheckboxModule,
     MatToolbarModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ]
 })
 export class MaterialModule {}
