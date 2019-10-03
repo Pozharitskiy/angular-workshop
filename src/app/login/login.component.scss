@@ -1,50 +1,35 @@
 .container {
   display: flex;
-  flex-direction: column;
-  height: 80vh;
-  justify-content: center;
-  align-content: center;
-}
-
-.auth {
-  justify-content: center;
-  display: flex;
   flex-direction: row;
+  height: 60vh;
+  justify-content: space-evenly;
+  align-content: center;
 }
 
 .login,
 .registration {
-  height: 200px;
   display: flex;
   flex-direction: column;
   align-self: center;
-  border: 1px solid rgb(131, 124, 124);
 }
 
-input {
-  height: 50px;
-  width: 300px;
-  border: none;
-  padding: 10px;
-  font-size: 20px;
-}
-
-.login {
-  justify-content: space-between;
+.registration_container,
+.login_container {
+  display: flex;
 }
 
 .controls {
   display: flex;
-  width: 650px;
-  align-self: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
-.register_button,
-.login_button {
-  width: 320px;
-  font-size: 20px;
-  border: none;
-  background-color: #4caf50;
-  margin-top: 10px;
+.form_title {
+  color: #b48608;
+  font-family: 'Droid serif', serif;
+  font-size: 36px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 44px;
+  margin: 0 0 12px;
+  text-align: center;
 }

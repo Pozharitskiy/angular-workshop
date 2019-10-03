@@ -1,1 +1,4 @@
-<app-login [title]="'Angular Workshop'"></app-login>
+<div *ngIf="showSpinner$ | async" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+<router-outlet></router-outlet>

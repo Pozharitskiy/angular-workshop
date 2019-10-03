@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
@@ -7,45 +9,49 @@ import { AuthService } from '../core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @Input() title: string;
-  loginEmail: string;
-  registerEmail: string;
-  loginPassword: string;
-  registerPassword: string;
-  userName: string;
+  loginForm: FormGroup;
+  registerForm: FormGroup;
   error: boolean;
   success: boolean;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private fb: FormBuilder) {}
 
-  async register(event: Event): Promise<void> {
-    try {
-      const response = await this.authService.register(
-        this.registerEmail,
-        this.registerPassword,
-        this.userName
-      );
-      this.error = false;
-      this.success = true;
-      localStorage.setItem(response.data.user.name, response.data.token);
-    } catch (error) {
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      rememberUser: false
+    });
+    this.registerForm = this.fb.group({
+      name: '',
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]]
+    });
+  }
+
+  login(
+    loginEmail: string,
+    loginPassword: string,
+    rememberUser: boolean
+  ): void {
+    rememberUser = this.loginForm.value.rememberUser;
+    this.authService.login(loginEmail, loginPassword, rememberUser);
+    if (Error) {
       this.error = true;
     }
   }
 
-  async login(event: Event): Promise<void> {
-    try {
-      const response = await this.authService.login(
-        this.loginEmail,
-        this.loginPassword
-      );
-      this.error = false;
-      this.success = true;
-    } catch (error) {
-      this.success = false;
+  register(userName: string, registerEmail: string, registerPassword: string) {
+    this.authService.register(userName, registerEmail, registerPassword);
+    if (Error) {
       this.error = true;
     }
   }
 
-  ngOnInit() {}
+  getErrorMessage(controlName: string) {
+    if (this.loginForm.controls[controlName].hasError('minlength')) {
+      return 'Must be at least 2 characters';
+    }
+    return 'Type your pass here';
+  }
 }

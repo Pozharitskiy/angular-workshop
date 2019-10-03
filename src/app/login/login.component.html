@@ -1,64 +1,97 @@
 <div class="container">
-  <div class="auth">
-    <div class="login">
-      <input
-        required
-        type="text"
-        name="email"
-        [(ngModel)]="loginEmail"
-        placeholder="login"
-      />
-      <input
-        required
-        type="password"
-        name="password"
-        [(ngModel)]="loginPassword"
-        placeholder="password"
-      />
-    </div>
-    <div class="registration">
-      <input
-        type="text"
-        name="name"
-        [(ngModel)]="userName"
-        placeholder="Your name"
-      />
-      <input
-        required
-        type="text"
-        name="email"
-        [(ngModel)]="registerEmail"
-        placeholder="login"
-      />
-      <input
-        required
-        type="password"
-        name="password"
-        [(ngModel)]="registerPassword"
-        placeholder="password"
-      />
-    </div>
+  <div class="login_container">
+    <form [formGroup]="loginForm" class="login">
+      <p class="form_title">Login</p>
+      <mat-form-field>
+        <input
+          #loginEmail
+          matInput
+          required
+          placeholder="email"
+          formControlName="email"
+        />
+
+        <mat-error [hidden]="!error">
+          Your email is invalid
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          #loginPassword
+          matInput
+          required
+          type="password"
+          placeholder="password"
+          formControlName="password"
+        />
+
+        <mat-error> Error: {{ getErrorMessage('password') }} </mat-error>
+      </mat-form-field>
+      <mat-checkbox [formControl]="loginForm.get('rememberUser')"
+        >Remember me</mat-checkbox
+      >
+    </form>
   </div>
-  <div class="controls">
-    <button
-      class="login_button"
-      (click)="login($event)"
-      [disabled]="!loginPassword"
-    >
-      Login
-    </button>
-    <button
-      class="register_button"
-      (click)="register($event)"
-      [disabled]="!registerPassword"
-    >
-      Register
-    </button>
+  <div class="registration_container">
+    <form [formGroup]="registerForm" class="registration">
+      <p class="form_title">Registration</p>
+      <mat-form-field>
+        <input
+          #userName
+          matInput
+          required
+          placeholder="name"
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          #registerEmail
+          matInput
+          required
+          placeholder="email"
+          formControlName="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          #registerPassword
+          matInput
+          required
+          type="password"
+          placeholder="password"
+          formControlName="password"
+        />
+
+        <mat-hint>
+          Pass must be 4 of more elements
+        </mat-hint>
+
+        <mat-error> Error: {{ getErrorMessage('password') }} </mat-error>
+      </mat-form-field>
+    </form>
   </div>
-  <div class="error" *ngIf="error">
-    <p>Your login or password is not correct</p>
-  </div>
-  <div class="success" *ngIf="success">
-    <p>Gotcha!</p>
-  </div>
+</div>
+<div class="controls">
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!loginPassword.value || !loginEmail.value"
+    (click)="login(loginEmail.value, loginPassword.value)"
+  >
+    Login
+  </button>
+  <button
+    mat-flat-button
+    color="accent"
+    [disabled]="!registerPassword.value || !registerEmail.value"
+    (click)="
+      register(userName.value, registerEmail.value, registerPassword.value)
+    "
+  >
+    register
+  </button>
 </div>
