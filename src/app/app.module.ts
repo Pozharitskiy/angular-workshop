@@ -4,10 +4,10 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppHttpInterceptor } from './core/services/http.interceptor';
 import { SharedModule } from './shared/shared.module';
@@ -17,10 +17,10 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     CommonModule,
-    LoginModule,
     AppRoutingModule,
     RouterModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     SharedModule
   ],
   providers: [

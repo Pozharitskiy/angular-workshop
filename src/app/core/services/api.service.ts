@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import {
   HttpClient,
   HttpHeaders,
@@ -22,7 +23,8 @@ export class ApiService {
   isError: boolean = false;
   constructor(
     private http: HttpClient,
-    private storageService: StorageAdapterService
+    private storageService: StorageAdapterService,
+    private snackBar: MatSnackBar
   ) {
     const token = localStorage.getItem('token') || '';
     this.options = {
@@ -68,6 +70,7 @@ export class ApiService {
 
   handleError(error: HttpErrorResponse) {
     this.isError = true;
+    this.snackBar.open('message', 'action');
     console.log(this.isError);
     return Observable.throw(error.statusText);
   }

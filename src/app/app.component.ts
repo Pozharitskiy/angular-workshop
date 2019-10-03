@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { SpinnerService } from './core/services/spinner.service';
 import { Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-root',
