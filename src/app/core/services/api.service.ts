@@ -6,12 +6,13 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 
 import { APIUrl } from './constants';
+import { Board } from '../models/board.model';
 import { StorageAdapterService } from './storage-adapter.service';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,14 @@ export class ApiService {
       .get(`${APIUrl}/${path}`, this.options)
       .pipe(map((response: any) => response.data as T))
       .toPromise();
+  }
+
+  getBoards(path): Observable<Board[]> {
+    return this.http.get<Board[]>(`${APIUrl}/${path}`, this.options);
+  }
+
+  getBoard(id): Observable<Board[]> {
+    return this.http.get<Board[]>(`${APIUrl}/boards/${id}`, this.options);
   }
 
   handleError(error: HttpErrorResponse) {

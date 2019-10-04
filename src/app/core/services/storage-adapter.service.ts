@@ -19,4 +19,8 @@ export class StorageAdapterService {
     that.options.headers.delete('authorization');
     storage.removeItem('token');
   }
+
+  checkData(type) {
+    return JSON.parse(localStorage.getItem(type));
+  }
 }

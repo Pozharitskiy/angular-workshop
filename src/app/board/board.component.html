@@ -1,0 +1,31 @@
+<div class="board_view">
+  <div *ngFor="let column of board.columns">
+    <mat-card class="board_column">
+      {{ column.title }}
+    </mat-card>
+    <div class="column__tasks_container">
+      <div class="column__task" *ngFor="let task of column.tasks">
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-description>
+              {{ task.task }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="column_task__controls">
+            <button mat-flat-button (click)="openTask()">
+              Open Task
+            </button>
+            <button mat-flat-button (click)="changeTaskTitle()">
+              Rename
+            </button>
+            <button mat-flat-button (click)="deleteTask()">Delete</button>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </div>
+</div>

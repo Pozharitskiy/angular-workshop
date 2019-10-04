@@ -12,26 +12,34 @@ import { APIUrl } from './constants';
 import { StorageAdapterService } from './storage-adapter.service';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { Router } from '@angular/router';
+import { Board } from '../models/board.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
-  constructor(private http: HttpClient, private apiService: ApiService) {}
-  getBoard(id: string) {
-    return this.http.get<any>(`${APIUrl}/boards/${id}`).pipe(
-      map(({ data }) => data),
-      catchError(this.handleError)
-    );
-  }
+  public board: Board;
 
-  getAllBoards() {
-    const boards = this.apiService.get('boards');
-    console.log(boards);
-  }
+  id: string = '';
+  constructor(
+    private http: HttpClient,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
 
   handleError(error: HttpErrorResponse) {
     console.log(error);
     return Observable.throw(error.statusText);
+  }
+
+  openBoard(id): void {
+    this.id = id;
+    this.apiService.getBoard(this.id).subscribe(data => {
+      this.board = data.data;
+      localStorage.setItem('currentBoard', this.board._id);
+      console.log(this.board);
+      this.router.navigate(['board']);
+    });
   }
 }

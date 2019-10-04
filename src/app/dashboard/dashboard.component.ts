@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BoardService } from '../core/services/board.service';
+import { ApiService } from '../core/services/api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,13 +9,19 @@ import { BoardService } from '../core/services/board.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public boards = [];
   constructor(
     public route: ActivatedRoute,
-    private boardService: BoardService
+    private boardService: BoardService,
+    private apiService: ApiService
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {});
-    this.boardService.getAllBoards();
+    this.apiService.getBoards('boards').subscribe(data => {
+      this.boards = data.data.boards;
+    });
+  }
+  openBoard(id) {
+    this.boardService.openBoard(id);
   }
 }

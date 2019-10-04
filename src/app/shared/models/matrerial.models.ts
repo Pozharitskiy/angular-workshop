@@ -7,7 +7,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatIconModule, MatCardModule } from '@angular/material';
+import {
+  MatIconModule,
+  MatCardModule,
+  MatListModule,
+  MatDialogModule
+} from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [],
@@ -21,7 +27,10 @@ import { MatIconModule, MatCardModule } from '@angular/material';
     MatToolbarModule,
     MatSnackBarModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule,
+    MatDialogModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule {}

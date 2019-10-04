@@ -7,6 +7,35 @@
   </mat-toolbar>
 
   <div class="content">
-    <mat-card class="board" *ngFor="let board of boards"></mat-card>
+    <mat-card class="board" *ngFor="let board of boards">
+      <div class="board_title">{{ board.title }}</div>
+      <div class="board_controls">
+        <button (click)="changeBoardTitle()">Rename</button>
+        <button (click)="deleteBoard()">Delete</button>
+      </div>
+      <div class="board_users">
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-description>
+              Users:
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngFor="let user of board.users" class="board_users__item">
+            {{ user.name }}
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="openBoard(board._id)"
+        class="board_open__btn"
+      >
+        Open board
+      </button>
+    </mat-card>
   </div>
 </div>
