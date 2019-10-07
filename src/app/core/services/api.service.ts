@@ -55,34 +55,29 @@ export class ApiService {
       .toPromise();
   }
 
-  post<T>(path: string, body: any): Promise<T> {
+  post<T>(path: string, body: any, option: any): Promise<T> {
     return this.http
-      .post(`${APIUrl}/${path}`, body, this.options)
+      .post(`${APIUrl}/${path}`, body, option)
       .pipe(map((response: any) => response.data as T))
       .toPromise();
   }
 
-  get<T>(path: string): Promise<T> {
-    return this.http
-      .get(`${APIUrl}/${path}`, this.options)
-      .pipe(map((response: any) => response.data as T))
-      .toPromise();
+  deleteBoard(id: string): Observable<Board[]> {
+    return this.http.delete<Board[]>(`${APIUrl}/boards/${id}`, this.options);
   }
 
-  getBoards(path): Observable<Board[]> {
+  getBoards(path: string): Observable<Board[]> {
     return this.http.get<Board[]>(`${APIUrl}/${path}`, this.options);
   }
 
-  getBoard(id): Observable<Board[]> {
+  getBoard(id: string): Observable<Board[]> {
     return this.http.get<Board[]>(`${APIUrl}/boards/${id}`, this.options);
   }
 
   handleError(error: HttpErrorResponse) {
     this.isError = true;
-    console.log('this', this);
 
     this.snackBar.open('Your data is invalid', 'I got you');
-    console.log(this.isError);
     return Observable.throw(error.statusText);
   }
 }

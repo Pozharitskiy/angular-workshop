@@ -45,7 +45,4 @@ export class BoardService {
   backHome(): void {
     this.router.navigate(['dashboard']);
   }
-
-
-  }
 }

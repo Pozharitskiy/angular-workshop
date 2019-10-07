@@ -17,11 +17,22 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getBoards();
+  }
+
+  openBoard(id: string): void {
+    this.boardService.openBoard(id);
+  }
+
+  deleteBoard(id: string): void {
+    this.apiService.deleteBoard(id).subscribe(data => {
+      this.getBoards();
+    });
+  }
+
+  getBoards(): void {
     this.apiService.getBoards('boards').subscribe(data => {
       this.boards = data.data.boards;
     });
-  }
-  openBoard(id) {
-    this.boardService.openBoard(id);
   }
 }

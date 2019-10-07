@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppHttpInterceptor } from './core/services/http.interceptor';
 import { SharedModule } from './shared/shared.module';
 
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
     RouterModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
     SharedModule
   ],
   providers: [

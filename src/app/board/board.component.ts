@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../core/services/board.service';
 import { Board } from '../core/models/board.model';
 import { StorageAdapterService } from '../core/services/storage-adapter.service';
+import { ApiService } from '../core/services/api.service';
 
 @Component({
   selector: 'app-board',
@@ -10,14 +11,27 @@ import { StorageAdapterService } from '../core/services/storage-adapter.service'
 })
 export class BoardComponent implements OnInit {
   board: Board;
+  boardId: string;
   constructor(
     private boardService: BoardService,
-    private storage: StorageAdapterService
+    private storage: StorageAdapterService,
+    private apiService: ApiService
   ) {
-    this.board = this.storage.checkData('currentBoard');
+    this.boardId = this.storage.checkData('currentBoard', localStorage);
+    this.board = {
+      _id: '',
+      title: '',
+      users: '',
+      columns: ''
+    };
   }
 
   ngOnInit() {
-    console.log(this.board.columns);
+    this.apiService.getBoard(this.boardId).subscribe(data => {
+      this.board = data.data;
+    });
+  }
+  backHome(): void {
+    this.boardService.backHome();
   }
 }

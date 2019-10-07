@@ -1,3 +1,9 @@
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row>
+    <span class="home_icon" (click)="backHome()">Trollo</span>
+    <mat-icon>build</mat-icon>
+  </mat-toolbar-row>
+</mat-toolbar>
 <div class="board_view">
   <div *ngFor="let column of board.columns">
     <mat-card class="board_column">

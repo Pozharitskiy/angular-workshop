@@ -10,8 +10,12 @@
     <mat-card class="board" *ngFor="let board of boards">
       <div class="board_title">{{ board.title }}</div>
       <div class="board_controls">
-        <button (click)="changeBoardTitle()">Rename</button>
-        <button (click)="deleteBoard()">Delete</button>
+        <button mat-flat-button color="accent" (click)="changeBoardTitle()">
+          Rename
+        </button>
+        <button mat-flat-button color="warn" (click)="deleteBoard(board._id)">
+          Delete
+        </button>
       </div>
       <div class="board_users">
         <mat-expansion-panel

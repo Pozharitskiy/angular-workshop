@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   getErrorMessage(controlName: string) {
     if (this.loginForm.controls[controlName].hasError('minlength')) {
-      return 'Must be at least 2 characters';
+      return 'Must be at least 4 characters';
     }
     return 'Type your pass here';
   }
