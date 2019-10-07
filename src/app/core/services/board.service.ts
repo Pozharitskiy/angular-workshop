@@ -33,13 +33,19 @@ export class BoardService {
     return Observable.throw(error.statusText);
   }
 
-  openBoard(id): void {
-    this.id = id;
+  openBoard(id: string): void {
     this.apiService.getBoard(this.id).subscribe(data => {
       this.board = data.data;
-      localStorage.setItem('currentBoard', this.board._id);
+      localStorage.setItem('currentBoard', id);
       console.log(this.board);
-      this.router.navigate(['board']);
+      this.router.navigate([`board/${id}`]);
     });
+  }
+
+  backHome(): void {
+    this.router.navigate(['dashboard']);
+  }
+
+
   }
 }
