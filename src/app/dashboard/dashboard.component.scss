@@ -19,3 +19,43 @@
 .board_controls {
   display: flex;
 }
+
+.add_board__btn {
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.fixed_overlay {
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.fixed_overlay__modal {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.fixed_overlay__modal::after {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 80%;
+  content: '';
+}
+
+.modal {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.modal_title__header {
+}
+
+.rename_btn {
+  cursor: pointer;
+}

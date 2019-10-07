@@ -74,6 +74,19 @@ export class ApiService {
     return this.http.get<Board[]>(`${APIUrl}/boards/${id}`, this.options);
   }
 
+  addBoard(title: string): void {
+    this.http
+      .post<Board[]>(`${APIUrl}/boards/`, { title }, this.options)
+      .toPromise();
+  }
+
+  updateBoard(id: string, title: string) {
+    this.http;
+    return this.http
+      .put<Board[]>(`${APIUrl}/boards/${id}`, { title }, this.options)
+      .toPromise();
+  }
+
   handleError(error: HttpErrorResponse) {
     this.isError = true;
 

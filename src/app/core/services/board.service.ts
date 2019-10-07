@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse
-} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
-import { catchError } from 'rxjs/operators';
-
-import { APIUrl } from './constants';
-import { StorageAdapterService } from './storage-adapter.service';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Router } from '@angular/router';
@@ -22,14 +13,9 @@ export class BoardService {
   public board: Board;
 
   id: string = '';
-  constructor(
-    private http: HttpClient,
-    private apiService: ApiService,
-    private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   handleError(error: HttpErrorResponse) {
-    console.log(error);
     return Observable.throw(error.statusText);
   }
 
@@ -37,7 +23,6 @@ export class BoardService {
     this.apiService.getBoard(this.id).subscribe(data => {
       this.board = data.data;
       localStorage.setItem('currentBoard', id);
-      console.log(this.board);
       this.router.navigate([`board/${id}`]);
     });
   }

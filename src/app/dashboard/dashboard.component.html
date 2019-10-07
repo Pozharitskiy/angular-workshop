@@ -8,9 +8,25 @@
 
   <div class="content">
     <mat-card class="board" *ngFor="let board of boards">
-      <div class="board_title">{{ board.title }}</div>
+      <form [formGroup]="boardTitleForm" class="modal">
+        <mat-form-field>
+          <input
+            #boardTitle
+            matInput
+            required
+            value="{{ board.title }}"
+            formControlName="title"
+            onfocus="this.value=''"
+          />
+        </mat-form-field>
+        <mat-icon class="rename_btn" (click)="openInput()">edit</mat-icon>
+      </form>
       <div class="board_controls">
-        <button mat-flat-button color="accent" (click)="changeBoardTitle()">
+        <button
+          mat-flat-button
+          color="accent"
+          (click)="updateBoard(board._id, boardTitle.value)"
+        >
           Rename
         </button>
         <button mat-flat-button color="warn" (click)="deleteBoard(board._id)">
@@ -41,5 +57,33 @@
         Open board
       </button>
     </mat-card>
+    <mat-icon class="add_board__btn" (click)="openModal()">add</mat-icon>
+  </div>
+</div>
+
+<div class="fixed_overlay fixed_overlay__modal" [hidden]="!isModalOpened">
+  <div class="modal">
+    <div class="modal-content">
+      <h1 class="modal_title__header">Add new board</h1>
+      <form [formGroup]="addBoardForm" class="modal">
+        <mat-form-field>
+          <input
+            #boardName
+            matInput
+            required
+            placeholder="board name"
+            formControlName="title"
+          />
+        </mat-form-field>
+      </form>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="addBoard(boardName.value)"
+        class="board_open__btn"
+      >
+        Add board
+      </button>
+    </div>
   </div>
 </div>

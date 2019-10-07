@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../core/services/board.service';
 import { Board } from '../core/models/board.model';
+
 import { StorageAdapterService } from '../core/services/storage-adapter.service';
 import { ApiService } from '../core/services/api.service';
 
