@@ -61,6 +61,7 @@ export class DashboardComponent implements OnInit {
 
   getBoards(): void {
     this.apiService.getBoards('boards').subscribe(data => {
+      console.log(data);
       this.boards = data.data.boards;
     });
   }

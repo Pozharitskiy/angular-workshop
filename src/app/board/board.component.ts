@@ -29,7 +29,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.getBoard(this.boardId).subscribe(data => {
-      this.board = data.data;
+      this.board = data;
     });
   }
   backHome(): void {
@@ -43,7 +43,8 @@ export class BoardComponent implements OnInit {
 
   getBoard(id: string): void {
     this.apiService.getBoard(id).subscribe(data => {
-      this.board = data.data.board;
+      console.log(data);
+      this.board = data;
     });
   }
 }

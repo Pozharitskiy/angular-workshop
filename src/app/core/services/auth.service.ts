@@ -10,6 +10,7 @@ import { ApiService } from '../services/api.service';
   providedIn: 'root'
 })
 export class AuthService {
+  isAuthorizedUser: boolean;
   private isAuthorizedSubject = new BehaviorSubject<boolean>(undefined);
 
   constructor(
@@ -17,8 +18,10 @@ export class AuthService {
     private router: Router,
     private storageService: StorageAdapterService
   ) {
-    const isAuthorized = !!localStorage.getItem('token');
-    this.isAuthorizedSubject.next(isAuthorized);
+    !!sessionStorage.getItem('token')
+      ? (this.isAuthorizedUser = !!sessionStorage.getItem('token'))
+      : (this.isAuthorizedUser = !!localStorage.getItem('token'));
+    this.isAuthorizedSubject.next(this.isAuthorizedUser);
   }
 
   isAuthorized(): Observable<boolean> {
