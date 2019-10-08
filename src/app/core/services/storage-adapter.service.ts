@@ -21,7 +21,6 @@ export class StorageAdapterService {
   }
 
   checkData(id, storage): string {
-    console.log(storage);
     return storage.getItem(id);
   }
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../core/services/board.service';
 import { Board } from '../core/models/board.model';
 
-import { StorageAdapterService } from '../core/services/storage-adapter.service';
 import { ApiService } from '../core/services/api.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -13,16 +13,16 @@ import { ApiService } from '../core/services/api.service';
 export class BoardComponent implements OnInit {
   board: Board;
   boardId: string;
+  taskTitleForm: FormGroup;
+  columnTitleForm: FormGroup;
+  isInputDisabled: boolean = true;
+
   constructor(
     private boardService: BoardService,
-    private storage: StorageAdapterService,
     private apiService: ApiService,
-    private storageService: StorageAdapterService
+    private fb: FormBuilder
   ) {
-    this.boardId = this.storage.checkData(
-      'currentBoard',
-      this.storageService.defineStorage()
-    );
+    this.boardId = localStorage.getItem('currentBoard');
     this.board = {
       _id: '',
       title: '',
@@ -35,19 +35,44 @@ export class BoardComponent implements OnInit {
     this.apiService.getBoard(this.boardId).subscribe(data => {
       this.board = data;
     });
+    this.columnTitleForm = this.fb.group({
+      title: { value: '' }
+    });
+    this.taskTitleForm = this.fb.group({
+      title: { value: '' }
+    });
   }
 
   backHome(): void {
     this.boardService.backHome();
   }
 
-  deleteTask(id: string): void {
-    this.apiService.deleteTask(id);
-    this.getBoard(this.boardId);
+  updateColumnTitle(id: string, title: string): void {
+    this.apiService.updateColumn(id, title);
+    this.getBoard();
   }
 
-  getBoard(id: string): void {
-    this.apiService.getBoard(id).subscribe(data => {
+  updateTask(id: string, title: string): void {
+    this.apiService.updateTask(id, title);
+    this.getBoard();
+  }
+
+  deleteColumn(id: string): void {
+    this.apiService.delete(id, 'column').subscribe(data => {
+      this.board = data;
+    });
+    this.getBoard();
+  }
+
+  deleteTask(id: string): void {
+    this.apiService.delete(id, 'tasks').subscribe(data => {
+      this.board = data;
+    });
+    this.getBoard();
+  }
+
+  getBoard(): void {
+    this.apiService.getBoard(this.boardId).subscribe(data => {
       this.board = data;
     });
   }

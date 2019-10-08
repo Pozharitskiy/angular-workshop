@@ -5,10 +5,29 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="board_view">
-  <div *ngFor="let column of board.columns">
+  <div *ngFor="let column of this.board.columns">
     <mat-card class="board_column">
-      {{ column.title }}
+      <form [formGroup]="columnTitleForm" class="board_title">
+        <mat-form-field class="board_title__input">
+          <input
+            #columnTitle
+            matInput
+            required
+            value="{{ column.title }}"
+            formControlName="title"
+          />
+        </mat-form-field>
+      </form>
+      <mat-icon
+        (click)="updateColumnTitle(column._id, columnTitle.value)"
+        class="change_column__title"
+        >edit</mat-icon
+      >
+      <mat-icon (click)="deleteColumn(column._id)" class="delete_column__btn"
+        >delete</mat-icon
+      >
     </mat-card>
+
     <div class="column__tasks_container">
       <div class="column__task" *ngFor="let task of column.tasks">
         <mat-expansion-panel
@@ -17,7 +36,17 @@
         >
           <mat-expansion-panel-header>
             <mat-panel-description>
-              {{ task.task }}
+              <form [formGroup]="taskTitleForm" class="board_title">
+                <mat-form-field class="board_title__input">
+                  <input
+                    #taskTitle
+                    matInput
+                    required
+                    value="{{ task.task }}"
+                    formControlName="title"
+                  />
+                </mat-form-field>
+              </form>
             </mat-panel-description>
           </mat-expansion-panel-header>
 
@@ -25,10 +54,15 @@
             <button mat-flat-button (click)="openTask()">
               Open Task
             </button>
-            <button mat-flat-button (click)="changeTaskTitle()">
+            <button
+              mat-flat-button
+              (click)="updateTask(task._id, taskTitle.value)"
+            >
               Rename
             </button>
-            <button mat-flat-button (click)="deleteTask()">Delete</button>
+            <button mat-flat-button (click)="deleteTask(task._id)">
+              Delete
+            </button>
           </div>
         </mat-expansion-panel>
       </div>

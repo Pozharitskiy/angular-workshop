@@ -1,7 +1,18 @@
 .board_view {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .home_icon {
+  cursor: pointer;
+}
+
+.board_column {
+  display: flex;
+}
+
+.change_column__title,
+.delete_column__btn {
   cursor: pointer;
 }

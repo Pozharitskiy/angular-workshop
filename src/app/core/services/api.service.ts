@@ -63,28 +63,34 @@ export class ApiService {
       .toPromise();
   }
 
-  deleteBoard(id: string): Observable<Board> {
+  delete(id: string, type: string): Observable<Board> {
     return this.http
-      .delete<Response>(`${APIUrl}/boards/${id}`, this.options)
-      .pipe(map(res => res.data.board as Board)); //!!!
+      .delete<Response>(`${APIUrl}/${type}/${id}`, this.options)
+      .pipe(map(res => res.data.board as Board));
   }
 
-  deleteTask(id: string): Observable<Board> {
-    return this.http
-      .delete<Response>(`${APIUrl}/tasks/${id}`, this.options)
-      .pipe(map(res => res.data.board as Board)); //!!!
-  }
+  // deleteColumn(id: string): Observable<Board> {
+  //   return this.http
+  //     .delete<Response>(`${APIUrl}/columns/${id}`, this.options)
+  //     .pipe(map(res => res.data.board as Board));
+  // }
+
+  // deleteTask(id: string): Observable<Board> {
+  //   return this.http
+  //     .delete<Response>(`${APIUrl}/tasks/${id}`, this.options)
+  //     .pipe(map(res => res.data.board as Board));
+  // }
 
   getBoards(path: string): Observable<Board[]> {
     return this.http
       .get<Response>(`${APIUrl}/${path}`, this.options)
-      .pipe(map(res => res.data.boards as Board[])); //!!!
+      .pipe(map(res => res.data.boards as Board[]));
   }
 
   getBoard(id: string): Observable<Board> {
     return this.http
       .get<Response>(`${APIUrl}/boards/${id}`, this.options)
-      .pipe(map(res => res.data as Board)); //!!!
+      .pipe(map(res => res.data as Board));
   }
 
   addBoard(title: string): void {
@@ -98,6 +104,21 @@ export class ApiService {
     this.http;
     return this.http
       .put<Response>(`${APIUrl}/boards/${id}`, { title }, this.options)
+      .pipe(map(res => res.data.board as Board))
+      .toPromise();
+  }
+
+  updateColumn(id: string, title: string) {
+    this.http;
+    return this.http
+      .put<Response>(`${APIUrl}/columns/${id}`, { title }, this.options)
+      .pipe(map(res => res.data.board as Board))
+      .toPromise();
+  }
+  updateTask(id: string, title: string) {
+    this.http;
+    return this.http
+      .put<Response>(`${APIUrl}/tasks/${id}`, { title }, this.options)
       .pipe(map(res => res.data.board as Board))
       .toPromise();
   }
