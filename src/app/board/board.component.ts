@@ -16,13 +16,17 @@ export class BoardComponent implements OnInit {
   constructor(
     private boardService: BoardService,
     private storage: StorageAdapterService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private storageService: StorageAdapterService
   ) {
-    this.boardId = this.storage.checkData('currentBoard', localStorage);
+    this.boardId = this.storage.checkData(
+      'currentBoard',
+      this.storageService.defineStorage()
+    );
     this.board = {
       _id: '',
       title: '',
-      users: '',
+      users: [],
       columns: ''
     };
   }
@@ -32,6 +36,7 @@ export class BoardComponent implements OnInit {
       this.board = data;
     });
   }
+
   backHome(): void {
     this.boardService.backHome();
   }
@@ -43,7 +48,6 @@ export class BoardComponent implements OnInit {
 
   getBoard(id: string): void {
     this.apiService.getBoard(id).subscribe(data => {
-      console.log(data);
       this.board = data;
     });
   }

@@ -20,7 +20,14 @@ export class StorageAdapterService {
     storage.removeItem('token');
   }
 
-  checkData(id, storage) {
+  checkData(id, storage): string {
+    console.log(storage);
     return storage.getItem(id);
+  }
+
+  defineStorage(): any {
+    if (localStorage.getItem('token')) {
+      return localStorage;
+    } else return sessionStorage;
   }
 }

@@ -18,9 +18,10 @@ export class AuthService {
     private router: Router,
     private storageService: StorageAdapterService
   ) {
-    !!sessionStorage.getItem('token')
-      ? (this.isAuthorizedUser = !!sessionStorage.getItem('token'))
-      : (this.isAuthorizedUser = !!localStorage.getItem('token'));
+    !!localStorage.getItem('token')
+      ? (this.isAuthorizedUser = true)
+      : (this.isAuthorizedUser = !!sessionStorage.getItem('token'));
+
     this.isAuthorizedSubject.next(this.isAuthorizedUser);
   }
 

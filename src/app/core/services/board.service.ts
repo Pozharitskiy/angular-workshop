@@ -21,8 +21,7 @@ export class BoardService {
 
   openBoard(id: string): void {
     this.apiService.getBoard(this.id).subscribe(data => {
-      console.log(data);
-      this.board = data.data;
+      this.board = data;
       localStorage.setItem('currentBoard', id);
       this.router.navigate([`board/${id}`]);
     });
