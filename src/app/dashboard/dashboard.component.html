@@ -8,15 +8,14 @@
 
   <div class="content">
     <mat-card class="board" *ngFor="let board of boards">
-      <form [formGroup]="boardTitleForm" class="modal">
-        <mat-form-field>
+      <form [formGroup]="boardTitleForm" class="board_title">
+        <mat-form-field class="board_title__input">
           <input
             #boardTitle
             matInput
             required
             value="{{ board.title }}"
             formControlName="title"
-            onfocus="this.value=''"
           />
         </mat-form-field>
         <mat-icon class="rename_btn" (click)="openInput()">edit</mat-icon>

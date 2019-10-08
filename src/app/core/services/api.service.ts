@@ -11,8 +11,9 @@ import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 
 import { APIUrl } from './constants';
-import { Board } from '../models/board.model';
+import { Response } from '../models/response.model';
 import { StorageAdapterService } from './storage-adapter.service';
+import { Board } from '../models/board.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,12 +67,18 @@ export class ApiService {
     return this.http.delete<Board[]>(`${APIUrl}/boards/${id}`, this.options);
   }
 
+  deleteTask(id: string): Observable<Board[]> {
+    return this.http.delete<Board[]>(`${APIUrl}/tasks/${id}`, this.options);
+  }
+
   getBoards(path: string): Observable<Board[]> {
     return this.http.get<Board[]>(`${APIUrl}/${path}`, this.options);
   }
 
-  getBoard(id: string): Observable<Board[]> {
-    return this.http.get<Board[]>(`${APIUrl}/boards/${id}`, this.options);
+  getBoard(id: string): Observable<Board> {
+    return this.http
+      .get<Response>(`${APIUrl}/boards/${id}`, this.options)
+      .pipe(map(res => res.data.board as Board)); //!!!
   }
 
   addBoard(title: string): void {

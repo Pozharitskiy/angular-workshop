@@ -35,4 +35,15 @@ export class BoardComponent implements OnInit {
   backHome(): void {
     this.boardService.backHome();
   }
+
+  deleteTask(id: string): void {
+    this.apiService.deleteTask(id);
+    this.getBoard(this.boardId);
+  }
+
+  getBoard(id: string): void {
+    this.apiService.getBoard(id).subscribe(data => {
+      this.board = data.data.board;
+    });
+  }
 }

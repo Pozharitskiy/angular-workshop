@@ -6,7 +6,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {
   MatIconModule,
   MatCardModule,
@@ -25,7 +24,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatToolbarModule,
-    MatSnackBarModule,
     MatIconModule,
     MatCardModule,
     MatListModule,

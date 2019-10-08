@@ -26,15 +26,18 @@ export class AuthService {
   }
 
   async login(email: string, password: string, rememberUserCheck: boolean) {
+    const token = this.storageService.getToken();
     if (rememberUserCheck) {
-      const token = this.storageService.getToken();
       this.storageService.setToken(token, localStorage);
     }
+    this.storageService.setToken(token, sessionStorage);
+
     await this.apiService.postWithoutToken('auth/signin', {
       email,
       password
     });
-    this.isAuthorizedSubject.next(true);
+
+    await this.isAuthorizedSubject.next(true);
 
     this.router.navigate(['dashboard']);
   }

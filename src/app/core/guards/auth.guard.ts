@@ -3,7 +3,6 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree,
   Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,22 +15,19 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.authService.isAuthorized()
-      .pipe(
-        filter((
-          isAuth => {
-            if (!isAuth) {
-              this.router.navigate(['login']);
-            }
-            return !isUndefined(isAuth);
-          })
-        )
-      );
+    return this.authService.isAuthorized().pipe(
+      filter(isAuth => {
+        if (!isAuth) {
+          this.router.navigate(['login']);
+        }
+        return !isUndefined(isAuth);
+      })
+    );
   }
 }

@@ -66,7 +66,6 @@ export class DashboardComponent implements OnInit {
   }
 
   addBoard(title: string): void {
-    console.log(title);
     this.apiService.addBoard(title);
     this.getBoards();
     this.isModalOpened = false;
@@ -74,6 +73,7 @@ export class DashboardComponent implements OnInit {
 
   updateBoard(id: string, title: string): void {
     this.apiService.updateBoard(id, title);
+    this.isInputDisabled = true;
     this.getBoards();
   }
 }
