@@ -48,12 +48,12 @@ export class BoardComponent implements OnInit {
   }
 
   updateColumnTitle(id: string, title: string): void {
-    this.apiService.updateColumn(id, title);
+    this.apiService.update(id, title, 'columns');
     this.getBoard();
   }
 
   updateTask(id: string, title: string): void {
-    this.apiService.updateTask(id, title);
+    this.apiService.update(id, title, 'tasks');
     this.getBoard();
   }
 

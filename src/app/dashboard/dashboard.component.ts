@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
   }
 
   updateBoard(id: string, title: string): void {
-    this.apiService.updateBoard(id, title);
+    this.apiService.update(id, title, 'boards');
     this.isInputDisabled = true;
     this.getBoards();
   }

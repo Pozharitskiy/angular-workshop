@@ -69,18 +69,6 @@ export class ApiService {
       .pipe(map(res => res.data.board as Board));
   }
 
-  // deleteColumn(id: string): Observable<Board> {
-  //   return this.http
-  //     .delete<Response>(`${APIUrl}/columns/${id}`, this.options)
-  //     .pipe(map(res => res.data.board as Board));
-  // }
-
-  // deleteTask(id: string): Observable<Board> {
-  //   return this.http
-  //     .delete<Response>(`${APIUrl}/tasks/${id}`, this.options)
-  //     .pipe(map(res => res.data.board as Board));
-  // }
-
   getBoards(path: string): Observable<Board[]> {
     return this.http
       .get<Response>(`${APIUrl}/${path}`, this.options)
@@ -100,25 +88,10 @@ export class ApiService {
       .toPromise();
   }
 
-  updateBoard(id: string, title: string) {
+  update(id: string, title: string, type: string) {
     this.http;
     return this.http
-      .put<Response>(`${APIUrl}/boards/${id}`, { title }, this.options)
-      .pipe(map(res => res.data.board as Board))
-      .toPromise();
-  }
-
-  updateColumn(id: string, title: string) {
-    this.http;
-    return this.http
-      .put<Response>(`${APIUrl}/columns/${id}`, { title }, this.options)
-      .pipe(map(res => res.data.board as Board))
-      .toPromise();
-  }
-  updateTask(id: string, title: string) {
-    this.http;
-    return this.http
-      .put<Response>(`${APIUrl}/tasks/${id}`, { title }, this.options)
+      .put<Response>(`${APIUrl}/${type}/${id}`, { title }, this.options)
       .pipe(map(res => res.data.board as Board))
       .toPromise();
   }
