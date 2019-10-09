@@ -41,7 +41,12 @@ export class AuthService {
       password
     });
 
-    await this.isAuthorizedSubject.next(true);
+    this.isAuthorizedSubject.next(true);
+
+    await this.apiService.getUser(email).subscribe(data => {
+      const userName = data + '';
+      localStorage.setItem('user name', userName);
+    });
 
     this.router.navigate(['dashboard']);
   }
@@ -51,7 +56,7 @@ export class AuthService {
       password,
       name
     });
-
+    localStorage.setItem('userName', name);
     this.isAuthorizedSubject.next(true);
     this.router.navigate(['dashboard']);
   }

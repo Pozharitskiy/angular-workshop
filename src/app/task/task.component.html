@@ -1,0 +1,9 @@
+<p>task works!</p>
+
+<div class="task_container">
+  <h1>{{ task.task }}</h1>
+  <div class="task_assingees" *ngFor="let user of users"></div>
+  <div class="comments_container">
+    <div *ngFor="let comment of comments"></div>
+  </div>
+</div>

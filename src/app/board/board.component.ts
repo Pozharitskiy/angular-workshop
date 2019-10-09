@@ -4,6 +4,7 @@ import { Board } from '../core/models/board.model';
 
 import { ApiService } from '../core/services/api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-board',
@@ -11,6 +12,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  taskModal: TaskComponent;
+  isTaskOpened: boolean = false;
   board: Board;
   boardId: string;
   createTaskForm: FormGroup;
@@ -67,7 +70,7 @@ export class BoardComponent implements OnInit {
   }
 
   deleteColumn(id: string): void {
-    this.apiService.delete(id, 'column').subscribe(data => {
+    this.apiService.delete(id, 'columns').subscribe(data => {
       this.board = data;
     });
     this.getBoard();
@@ -80,8 +83,14 @@ export class BoardComponent implements OnInit {
     this.getBoard();
   }
 
+  openTask(id: string): void {
+    this.boardService.taskId = id;
+    this.isTaskOpened = !this.isTaskOpened;
+  }
+
   getBoard(): void {
     this.apiService.getBoard(this.boardId).subscribe(data => {
+      console.log(data);
       this.board = data;
     });
   }

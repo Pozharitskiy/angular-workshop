@@ -11,6 +11,7 @@ import { Board } from '../models/board.model';
 })
 export class BoardService {
   public board: Board;
+  taskId: string = '';
 
   id: string = '';
   constructor(private apiService: ApiService, private router: Router) {}

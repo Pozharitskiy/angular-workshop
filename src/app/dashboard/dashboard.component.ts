@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   boardTitleForm: FormGroup;
   changeTitle: boolean = false;
   isInputDisabled: boolean = true;
+  userName: string = 'buddy';
 
   public boards = [];
   constructor(
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit {
     this.boardTitleForm = this.fb.group({
       title: { value: '', disabled: this.isInputDisabled }
     });
+    this.userName = localStorage.getItem('user name');
   }
 
   openModal(): void {
@@ -62,6 +64,7 @@ export class DashboardComponent implements OnInit {
   getBoards(): void {
     this.apiService.getBoards('boards').subscribe(data => {
       this.boards = data;
+      console.log(data);
     });
   }
 

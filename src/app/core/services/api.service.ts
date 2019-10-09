@@ -14,6 +14,8 @@ import { APIUrl } from './constants';
 import { Response } from '../models/response.model';
 import { StorageAdapterService } from './storage-adapter.service';
 import { Board } from '../models/board.model';
+import { User } from '../models/user.model';
+import { Task } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +71,12 @@ export class ApiService {
       .pipe(map(res => res.data.board as Board));
   }
 
+  getUser(email: string): Observable<User> {
+    return this.http
+      .get<Response>(`${APIUrl}/users/?email=${email}`, this.options)
+      .pipe(map(res => res.data.user.name as User));
+  }
+
   getBoards(path: string): Observable<Board[]> {
     return this.http
       .get<Response>(`${APIUrl}/${path}`, this.options)
@@ -79,6 +87,12 @@ export class ApiService {
     return this.http
       .get<Response>(`${APIUrl}/boards/${id}`, this.options)
       .pipe(map(res => res.data as Board));
+  }
+
+  getTask(id: string): Observable<Task> {
+    return this.http
+      .get<Response>(`${APIUrl}/boards/${id}`, this.options)
+      .pipe(map(res => res as Task));
   }
 
   add(title: string, type: string): void {

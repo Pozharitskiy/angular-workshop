@@ -45,6 +45,7 @@
             <button
               mat-stroked-button
               color="primary"
+              [disabled]="!createTaskTitle.value"
               (click)="createTask(column._id, createTaskTitle.value)"
             >
               Create task
@@ -67,7 +68,7 @@
             <div class="column_task__controls">
               <button
                 mat-flat-button
-                (click)="openTask()"
+                (click)="openTask(task._id)"
                 color="primary"
                 class="open_task__btn"
               >
@@ -96,3 +97,5 @@
     </div>
   </div>
 </div>
+
+<app-task [hidden]="!isTaskOpened"></app-task>
