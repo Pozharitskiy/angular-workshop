@@ -81,9 +81,15 @@ export class ApiService {
       .pipe(map(res => res.data as Board));
   }
 
-  addBoard(title: string): void {
+  add(title: string, type: string): void {
     this.http
-      .post<Response>(`${APIUrl}/boards/`, { title }, this.options)
+      .post<Response>(`${APIUrl}/${type}`, { title }, this.options)
+      .pipe(map(res => res.data as Board))
+      .toPromise();
+  }
+  addTask(id: string, title: string, type: string): void {
+    this.http
+      .post<Response>(`${APIUrl}/${type}/${id}`, { task: title }, this.options)
       .pipe(map(res => res.data as Board))
       .toPromise();
   }
@@ -92,6 +98,14 @@ export class ApiService {
     this.http;
     return this.http
       .put<Response>(`${APIUrl}/${type}/${id}`, { title }, this.options)
+      .pipe(map(res => res.data.board as Board))
+      .toPromise();
+  }
+
+  updateTask(id: string, title: string, type: string) {
+    this.http;
+    return this.http
+      .put<Response>(`${APIUrl}/${type}/${id}`, { task: title }, this.options)
       .pipe(map(res => res.data.board as Board))
       .toPromise();
   }

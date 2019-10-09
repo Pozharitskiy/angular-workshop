@@ -5,67 +5,94 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="board_view">
-  <div *ngFor="let column of this.board.columns">
-    <mat-card class="board_column">
-      <form [formGroup]="columnTitleForm" class="board_title">
-        <mat-form-field class="board_title__input">
-          <input
-            #columnTitle
-            matInput
-            required
-            value="{{ column.title }}"
-            formControlName="title"
-          />
-        </mat-form-field>
-      </form>
-      <mat-icon
-        (click)="updateColumnTitle(column._id, columnTitle.value)"
-        class="change_column__title"
-        >edit</mat-icon
-      >
-      <mat-icon (click)="deleteColumn(column._id)" class="delete_column__btn"
-        >delete</mat-icon
-      >
-    </mat-card>
-
-    <div class="column__tasks_container">
-      <div class="column__task" *ngFor="let task of column.tasks">
-        <mat-expansion-panel
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false"
+  <div class="scroll_container">
+    <div *ngFor="let column of this.board.columns" class="column">
+      <mat-card class="board_column">
+        <form [formGroup]="columnTitleForm" class="board_title">
+          <mat-form-field class="board_title__input">
+            <input
+              #columnTitle
+              matInput
+              required
+              value="{{ column.title }}"
+              formControlName="title"
+            />
+          </mat-form-field>
+        </form>
+        <mat-icon
+          (click)="updateColumnTitle(column._id, columnTitle.value)"
+          class="change_column__title"
+          >edit</mat-icon
         >
-          <mat-expansion-panel-header>
-            <mat-panel-description>
-              <form [formGroup]="taskTitleForm" class="board_title">
-                <mat-form-field class="board_title__input">
-                  <input
-                    #taskTitle
-                    matInput
-                    required
-                    value="{{ task.task }}"
-                    formControlName="title"
-                  />
-                </mat-form-field>
-              </form>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
+        <mat-icon (click)="deleteColumn(column._id)" class="delete_column__btn"
+          >delete</mat-icon
+        >
 
-          <div class="column_task__controls">
-            <button mat-flat-button (click)="openTask()">
-              Open Task
-            </button>
+        <div class="column__tasks_container">
+          <div class="create_task__container">
+            <form [formGroup]="createTaskForm" class="board_title">
+              <mat-form-field class="board_title__input">
+                <input
+                  #createTaskTitle
+                  matInput
+                  required
+                  value=""
+                  placeholder="new task title"
+                  formControlName="title"
+                />
+              </mat-form-field>
+            </form>
             <button
-              mat-flat-button
-              (click)="updateTask(task._id, taskTitle.value)"
+              mat-stroked-button
+              color="primary"
+              (click)="createTask(column._id, createTaskTitle.value)"
             >
-              Rename
-            </button>
-            <button mat-flat-button (click)="deleteTask(task._id)">
-              Delete
+              Create task
             </button>
           </div>
-        </mat-expansion-panel>
-      </div>
+          <h1>tasks:</h1>
+          <div class="column__task" *ngFor="let task of column.tasks">
+            <form [formGroup]="taskTitleForm" class="board_title">
+              <mat-form-field class="board_title__input">
+                <input
+                  #taskTitle
+                  matInput
+                  required
+                  value="{{ task.task }}"
+                  formControlName="title"
+                />
+              </mat-form-field>
+            </form>
+
+            <div class="column_task__controls">
+              <button
+                mat-flat-button
+                (click)="openTask()"
+                color="primary"
+                class="open_task__btn"
+              >
+                Open Task
+              </button>
+              <button
+                mat-flat-button
+                (click)="updateTask(task._id, taskTitle.value)"
+                color="accent"
+                class="rename_task__btn"
+              >
+                Rename
+              </button>
+              <button
+                mat-flat-button
+                (click)="deleteTask(task._id)"
+                color="warn"
+                class="delete_task__btn"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-card>
     </div>
   </div>
 </div>

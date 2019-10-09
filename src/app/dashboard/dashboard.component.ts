@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addBoard(title: string): void {
-    this.apiService.addBoard(title);
+    this.apiService.add(title, 'boards');
     this.getBoards();
     this.isModalOpened = false;
   }

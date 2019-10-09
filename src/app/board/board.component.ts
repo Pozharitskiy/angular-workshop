@@ -13,6 +13,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class BoardComponent implements OnInit {
   board: Board;
   boardId: string;
+  createTaskForm: FormGroup;
   taskTitleForm: FormGroup;
   columnTitleForm: FormGroup;
   isInputDisabled: boolean = true;
@@ -35,6 +36,9 @@ export class BoardComponent implements OnInit {
     this.apiService.getBoard(this.boardId).subscribe(data => {
       this.board = data;
     });
+    this.createTaskForm = this.fb.group({
+      title: { value: '' }
+    });
     this.columnTitleForm = this.fb.group({
       title: { value: '' }
     });
@@ -47,13 +51,18 @@ export class BoardComponent implements OnInit {
     this.boardService.backHome();
   }
 
+  createTask(id: string, title: string): void {
+    this.apiService.addTask(id, title, 'tasks');
+    this.getBoard();
+  }
+
   updateColumnTitle(id: string, title: string): void {
     this.apiService.update(id, title, 'columns');
     this.getBoard();
   }
 
   updateTask(id: string, title: string): void {
-    this.apiService.update(id, title, 'tasks');
+    this.apiService.updateTask(id, title, 'tasks');
     this.getBoard();
   }
 
