@@ -26,7 +26,7 @@ export class BoardComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) {
-    this.boardId = localStorage.getItem('currentBoard');
+    this.boardId = this.boardService.boardId;
     this.board = {
       _id: '',
       title: '',
@@ -84,8 +84,8 @@ export class BoardComponent implements OnInit {
   }
 
   openTask(id: string, columnId: string): void {
-    localStorage.setItem('currentTask', id);
-    localStorage.setItem('currentColumn', columnId);
+    this.boardService.taskId = id;
+    this.boardService.columnId = columnId;
     this.router.navigate([`task/${id}`]);
   }
 

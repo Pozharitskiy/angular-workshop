@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Task } from '../core/models/task.model';
 import { TaskService } from '../core/services/task.service';
+import { BoardService } from '../core/services/board.service';
 
 @Component({
   selector: 'app-task',
@@ -17,13 +18,17 @@ export class TaskComponent implements OnInit {
   task: Task;
 
   private taskId: BehaviorSubject<string> = new BehaviorSubject(
-    localStorage.getItem('currentTask')
+    this.boardService.taskId
   );
-  constructor(private taskService: TaskService, private fb: FormBuilder) {}
+  constructor(
+    private taskService: TaskService,
+    private fb: FormBuilder,
+    private boardService: BoardService
+  ) {}
 
   ngOnInit() {
     this.taskService
-      .getTask(this.taskId.value, localStorage.getItem('columnId'))
+      .getTask(this.taskId.value, this.boardService.columnId)
       .subscribe();
 
     this.taskForm = this.fb.group({

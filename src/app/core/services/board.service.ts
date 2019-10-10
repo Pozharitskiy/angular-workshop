@@ -10,6 +10,9 @@ import { Board } from '../models/board.model';
   providedIn: 'root'
 })
 export class BoardService {
+  boardId: string;
+  columnId: string;
+  taskId: string;
   public board: Board;
 
   id: string = '';
@@ -22,7 +25,7 @@ export class BoardService {
   openBoard(id: string): void {
     this.apiService.getBoard(this.id).subscribe(data => {
       this.board = data;
-      localStorage.setItem('currentBoard', id);
+      this.boardId = id;
       this.router.navigate([`board/${id}`]);
     });
   }
