@@ -6,10 +6,9 @@ import { BoardComponent } from './board.component';
 import { BoardRoutingModule } from './board-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
-import { TaskComponent } from '../task/task.component';
 
 @NgModule({
-  declarations: [BoardComponent, TaskComponent],
+  declarations: [BoardComponent],
   exports: [BoardComponent],
   imports: [SharedModule, BoardRoutingModule, ReactiveFormsModule, CommonModule]
 })

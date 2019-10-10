@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../core/services/api.service';
-import { BoardService } from '../core/services/board.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+
+import { BehaviorSubject } from 'rxjs';
+
+import { Task } from '../core/models/task.model';
+import { TaskService } from '../core/services/task.service';
 
 @Component({
   selector: 'app-task',
@@ -8,14 +12,26 @@ import { BoardService } from '../core/services/board.service';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {
-  taskId: string = '';
-  constructor(
-    private apiService: ApiService,
-    private boardService: BoardService
-  ) {}
+  taskForm: FormGroup;
+  boardId: string = '';
+  task: Task;
+
+  private taskId: BehaviorSubject<string> = new BehaviorSubject(
+    localStorage.getItem('currentTask')
+  );
+  constructor(private taskService: TaskService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.taskId = this.boardService.taskId;
-    this.apiService.getTask(this.taskId);
+    this.taskService
+      .getTask(this.taskId.value, localStorage.getItem('columnId'))
+      .subscribe();
+
+    this.taskForm = this.fb.group({
+      task: [''],
+      comments: [''],
+      users: [''],
+      updatedAt: ['']
+    });
   }
+  drawTask() {}
 }

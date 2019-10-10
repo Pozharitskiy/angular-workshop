@@ -6,7 +6,7 @@ export interface Response {
     _id: string;
     title: string;
     users: User[];
-    columns: string;
+    columns: [];
     token: string;
   };
   success: boolean;

@@ -68,7 +68,7 @@
             <div class="column_task__controls">
               <button
                 mat-flat-button
-                (click)="openTask(task._id)"
+                (click)="openTask(task._id, column._id)"
                 color="primary"
                 class="open_task__btn"
               >
@@ -97,5 +97,3 @@
     </div>
   </div>
 </div>
-
-<app-task [hidden]="!isTaskOpened"></app-task>

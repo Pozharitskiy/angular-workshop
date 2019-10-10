@@ -6,8 +6,8 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, merge } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 
 import { APIUrl } from './constants';
@@ -87,12 +87,6 @@ export class ApiService {
     return this.http
       .get<Response>(`${APIUrl}/boards/${id}`, this.options)
       .pipe(map(res => res.data as Board));
-  }
-
-  getTask(id: string): Observable<Task> {
-    return this.http
-      .get<Response>(`${APIUrl}/boards/${id}`, this.options)
-      .pipe(map(res => res as Task));
   }
 
   add(title: string, type: string): void {

@@ -4,7 +4,7 @@ import { Board } from '../core/models/board.model';
 
 import { ApiService } from '../core/services/api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { TaskComponent } from '../task/task.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -12,7 +12,6 @@ import { TaskComponent } from '../task/task.component';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  taskModal: TaskComponent;
   isTaskOpened: boolean = false;
   board: Board;
   boardId: string;
@@ -24,14 +23,15 @@ export class BoardComponent implements OnInit {
   constructor(
     private boardService: BoardService,
     private apiService: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.boardId = localStorage.getItem('currentBoard');
     this.board = {
       _id: '',
       title: '',
       users: [],
-      columns: ''
+      columns: []
     };
   }
 
@@ -83,9 +83,10 @@ export class BoardComponent implements OnInit {
     this.getBoard();
   }
 
-  openTask(id: string): void {
-    this.boardService.taskId = id;
-    this.isTaskOpened = !this.isTaskOpened;
+  openTask(id: string, columnId: string): void {
+    localStorage.setItem('currentTask', id);
+    localStorage.setItem('currentColumn', columnId);
+    this.router.navigate([`task/${id}`]);
   }
 
   getBoard(): void {

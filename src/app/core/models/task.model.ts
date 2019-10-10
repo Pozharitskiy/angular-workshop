@@ -1,5 +1,7 @@
 export interface Task {
   name: string;
-  email: string;
-  password: string;
+  createdAt: string;
+  updatedAt: string;
+  comments: string[];
+  _id: string;
 }
