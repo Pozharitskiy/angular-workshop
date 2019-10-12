@@ -1,7 +1,8 @@
 <div class="task_container">
-  <h1>{{ task }}</h1>
-  <div class="task_assingees" *ngFor="let user of users"></div>
+  <h1>{{ task.task }}</h1>
+  <div class="task_assingees" *ngFor="let user of users">user</div>
   <div class="comments_container">
-    <div *ngFor="let comment of comments">q</div>
+    <div *ngFor="let comment of comments">comment</div>
   </div>
+  <div>Created at {{ task.createdAt | date }}</div>
 </div>

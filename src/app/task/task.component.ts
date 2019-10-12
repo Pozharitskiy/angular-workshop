@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { Task } from '../core/models/task.model';
 import { TaskService } from '../core/services/task.service';
@@ -29,7 +29,10 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
     this.taskService
       .getTask(this.taskId.value, this.boardService.columnId)
-      .subscribe();
+      .subscribe(data => {
+        this.task = data[0];
+        console.log(this.task);
+      });
 
     this.taskForm = this.fb.group({
       task: [''],

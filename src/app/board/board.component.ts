@@ -91,7 +91,6 @@ export class BoardComponent implements OnInit {
 
   getBoard(): void {
     this.apiService.getBoard(this.boardId).subscribe(data => {
-      console.log(data);
       this.board = data;
     });
   }
