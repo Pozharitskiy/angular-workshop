@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Task } from '../core/models/task.model';
 import { TaskService } from '../core/services/task.service';
 import { BoardService } from '../core/services/board.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
 
 @Component({
@@ -25,7 +25,8 @@ export class TaskComponent implements OnInit {
     private apiService: ApiService,
     private fb: FormBuilder,
     private boardService: BoardService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {

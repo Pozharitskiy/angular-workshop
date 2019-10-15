@@ -24,7 +24,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap(
         data => {
-          this.spinner.hide();
+          setTimeout(() => this.spinner.hide(), 1000);
         },
         error => {
           this.spinner.hide();

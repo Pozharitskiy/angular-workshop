@@ -1,8 +1,8 @@
-<div class="task_container">
+<div class="task_container" *ngIf="task">
   <h1 class="task_title">{{ task.task }}</h1>
   <div class="task_assingees" *ngFor="let user of users">user</div>
   <div class="comments_container">
-    <div *ngFor="let comment of task.comments" class="task_comment">
+    <div *ngFor="let comment of this.task.comments" class="task_comment">
       <div class="task_comment__user">
         <p>{{ comment.name }}</p>
       </div>

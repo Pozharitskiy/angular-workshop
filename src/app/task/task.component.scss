@@ -10,11 +10,10 @@
   border: 3px solid rgb(75, 43, 216);
 }
 .task_title {
-  width: 80%;
   text-align: center;
 }
 .comments_container {
-  width: 80%;
+  display: flex;
 }
 .create_comment__form {
   margin-left: 25px;
