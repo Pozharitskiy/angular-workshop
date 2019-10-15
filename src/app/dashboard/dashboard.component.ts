@@ -44,10 +44,6 @@ export class DashboardComponent implements OnInit {
     this.isModalOpened = false;
   }
 
-  openBoard(id: string): void {
-    this.boardService.openBoard(id);
-  }
-
   openInput(): void {
     this.isInputDisabled = !this.isInputDisabled;
     this.isInputDisabled

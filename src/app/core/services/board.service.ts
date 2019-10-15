@@ -12,22 +12,18 @@ import { Board } from '../models/board.model';
 export class BoardService {
   boardId: string;
   columnId: string;
-  taskId: string;
-  public board: Board;
-
   id: string = '';
-  constructor(private apiService: ApiService, private router: Router) {}
+  taskId: string;
+  board: Board;
+
+  constructor(private apiService: ApiService, private router: Router) {
+    this.apiService.getBoard(this.id).subscribe(data => {
+      this.board = data;
+    });
+  }
 
   handleError(error: HttpErrorResponse) {
     return Observable.throw(error.statusText);
-  }
-
-  openBoard(id: string): void {
-    this.apiService.getBoard(this.id).subscribe(data => {
-      this.board = data;
-      this.boardId = id;
-      this.router.navigate([`board/${id}`]);
-    });
   }
 
   backHome(): void {

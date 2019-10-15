@@ -25,6 +25,7 @@ export class ApiService {
     headers: HttpHeaders;
   };
   isError: boolean = false;
+  token: string;
   constructor(
     private http: HttpClient,
     private storageService: StorageAdapterService,
@@ -51,7 +52,8 @@ export class ApiService {
             this.options.headers.set('authorization', response.data.token);
             this.storageService.setToken(response.data.token, sessionStorage);
           }
-
+          this.token = response.data.token;
+          console.log(response.data.token);
           return response.data as T;
         })
       )
@@ -69,6 +71,13 @@ export class ApiService {
     return this.http
       .delete<Response>(`${APIUrl}/${type}/${id}`, this.options)
       .pipe(map(res => res.data.board as Board));
+  }
+
+  deleteComment(id: string, taskId: string): Observable<Task> {
+    return this.http.delete<Response>(`${APIUrl}/comments/${id}`, {
+      ...this.options,
+      body: { taskId: taskId }
+    });
   }
 
   getUser(email: string): Observable<User> {
@@ -98,6 +107,17 @@ export class ApiService {
   addTask(id: string, title: string, type: string): void {
     this.http
       .post<Response>(`${APIUrl}/${type}/${id}`, { task: title }, this.options)
+      .pipe(map(res => res.data as Board))
+      .toPromise();
+  }
+
+  addComment(id: string, comment: string, email: string, name: string) {
+    this.http
+      .post<Response>(
+        `${APIUrl}/${'comments'}/${id}`,
+        { comment: comment, email: email, name: name },
+        this.options
+      )
       .pipe(map(res => res.data as Board))
       .toPromise();
   }

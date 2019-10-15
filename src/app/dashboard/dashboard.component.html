@@ -48,14 +48,14 @@
           </div>
         </mat-expansion-panel>
       </div>
-      <button
+      <a
         mat-flat-button
         color="primary"
-        (click)="openBoard(board._id)"
         class="board_open__btn"
+        routerLink="/board/{{ board._id }}"
       >
         Open board
-      </button>
+      </a>
     </mat-card>
     <mat-icon class="add_board__btn" (click)="openModal()">add</mat-icon>
   </div>

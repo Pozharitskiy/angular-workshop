@@ -11,7 +11,7 @@ import { ApiService } from '../services/api.service';
 })
 export class AuthService {
   isAuthorizedUser: boolean;
-  private isAuthorizedSubject = new BehaviorSubject<boolean>(undefined);
+  private isAuthorizedSubject = new BehaviorSubject<boolean>(false);
 
   constructor(
     private apiService: ApiService,
@@ -30,24 +30,26 @@ export class AuthService {
   }
 
   async login(email: string, password: string, rememberUserCheck: boolean) {
-    const token = this.storageService.getToken();
-    if (rememberUserCheck) {
-      this.storageService.setToken(token, localStorage);
-    }
-    this.storageService.setToken(token, sessionStorage);
-
     await this.apiService.postWithoutToken('auth/signin', {
       email,
       password
     });
 
-    this.isAuthorizedSubject.next(true);
+    const token = this.apiService.token;
 
-    await this.apiService.getUser(email).subscribe(data => {
+    if (rememberUserCheck) {
+      this.storageService.setToken(token, localStorage);
+    }
+    this.storageService.setToken(token, sessionStorage);
+
+    this.apiService.getUser(email).subscribe(data => {
       const userName = data + '';
+      const userEmail = email + '';
       localStorage.setItem('user name', userName);
+      localStorage.setItem('user email', userEmail);
     });
 
+    this.isAuthorizedSubject.next(true);
     this.router.navigate(['dashboard']);
   }
   async register(email: string, password: string, name: string) {

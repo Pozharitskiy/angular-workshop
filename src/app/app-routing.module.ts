@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./board/board.module').then(m => m.BoardModule)
   },
   {
-    path: 'task/:id',
+    path: 'board/:id/column/:columnId/task/:taskId',
     canActivate: [AuthGuard],
     loadChildren: () => import('./task/task.module').then(m => m.TaskModule)
   }

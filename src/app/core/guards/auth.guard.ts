@@ -7,7 +7,6 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { isUndefined } from 'lodash';
 
 import { AuthService } from '../services/auth.service';
 
@@ -23,7 +22,7 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> {
     return this.authService.isAuthorized().pipe(
       filter(isAuth => {
-        return !isUndefined(isAuth);
+        return isAuth;
       }),
       map(isAuth => {
         if (!isAuth) {

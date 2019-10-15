@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { BehaviorSubject, Subject } from 'rxjs';
-
 import { Task } from '../core/models/task.model';
 import { TaskService } from '../core/services/task.service';
 import { BoardService } from '../core/services/board.service';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../core/services/api.service';
 
 @Component({
   selector: 'app-task',
@@ -16,30 +16,57 @@ export class TaskComponent implements OnInit {
   taskForm: FormGroup;
   boardId: string = '';
   task: Task;
+  taskId: string;
+  columnId: string;
+  newComment: string;
 
-  private taskId: BehaviorSubject<string> = new BehaviorSubject(
-    this.boardService.taskId
-  );
   constructor(
     private taskService: TaskService,
+    private apiService: ApiService,
     private fb: FormBuilder,
-    private boardService: BoardService
+    private boardService: BoardService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.taskService
-      .getTask(this.taskId.value, this.boardService.columnId)
-      .subscribe(data => {
-        this.task = data[0];
-        console.log(this.task);
-      });
+    this.activatedRoute.params.subscribe(path => {
+      this.taskId = path.taskId;
+      this.columnId = path.columnId;
+      this.boardId = path.id;
+    });
+
+    this.getTask();
 
     this.taskForm = this.fb.group({
       task: [''],
       comments: [''],
       users: [''],
-      updatedAt: ['']
+      updatedAt: [''],
+      title: ['']
     });
   }
-  drawTask() {}
+
+  getTask(): void {
+    this.taskService
+      .getTask(this.taskId, this.columnId, this.boardId)
+      .subscribe(data => {
+        this.task = data;
+      });
+  }
+
+  createComment(text: string, value: string) {
+    this.apiService.addComment(
+      this.taskId,
+      localStorage.getItem('user name'),
+      localStorage.getItem('user email'),
+      text
+    );
+    this.taskForm.reset();
+    this.getTask();
+  }
+
+  deleteComment(id: string) {
+    this.apiService.deleteComment(id, this.taskId).subscribe(data => data);
+    this.getTask();
+  }
 }

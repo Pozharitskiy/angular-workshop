@@ -66,14 +66,16 @@
             </form>
 
             <div class="column_task__controls">
-              <button
+              <a
                 mat-flat-button
-                (click)="openTask(task._id, column._id)"
+                routerLink="/board/{{ board._id }}/column/{{
+                  column._id
+                }}/task/{{ task._id }}"
                 color="primary"
                 class="open_task__btn"
               >
                 Open Task
-              </button>
+              </a>
               <button
                 mat-flat-button
                 (click)="updateTask(task._id, taskTitle.value)"

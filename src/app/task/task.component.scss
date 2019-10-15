@@ -1,0 +1,21 @@
+.task_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.task_comment {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+  border: 3px solid rgb(75, 43, 216);
+}
+.task_title {
+  width: 80%;
+  text-align: center;
+}
+.comments_container {
+  width: 80%;
+}
+.create_comment__form {
+  margin-left: 25px;
+}

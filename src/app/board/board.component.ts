@@ -4,7 +4,7 @@ import { Board } from '../core/models/board.model';
 
 import { ApiService } from '../core/services/api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-board',
@@ -24,9 +24,9 @@ export class BoardComponent implements OnInit {
     private boardService: BoardService,
     private apiService: ApiService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.boardId = this.boardService.boardId;
     this.board = {
       _id: '',
       title: '',
@@ -36,9 +36,12 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(path => (this.boardId = path['id']));
+
     this.apiService.getBoard(this.boardId).subscribe(data => {
       this.board = data;
     });
+
     this.createTaskForm = this.fb.group({
       title: { value: '' }
     });
