@@ -6,7 +6,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, BehaviorSubject } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 
@@ -25,21 +25,25 @@ export class ApiService {
     headers: HttpHeaders;
   };
   isError: boolean = false;
-  token: string;
+  token$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   constructor(
     private http: HttpClient,
     private storageService: StorageAdapterService,
     private snackBar: MatSnackBar
   ) {
-    const token = this.storageService.defineStorage().getItem('token') || '';
-    this.options = {
-      headers: new HttpHeaders({
-        authorization: token
-      })
-    };
+    this.token$.subscribe(data => {
+      this.options = {
+        headers: new HttpHeaders({
+          authorization: data
+        })
+      };
+    });
+    this.token$.next(
+      this.storageService.defineStorage().getItem('token') || ''
+    );
   }
 
-  postWithoutToken<T>(path: string, body: any): Promise<T> {
+  postWithoutToken<T>(path: string, body: any) {
     return this.http
       .post(`${APIUrl}/${path}`, body)
       .pipe(
@@ -52,8 +56,7 @@ export class ApiService {
             this.options.headers.set('authorization', response.data.token);
             this.storageService.setToken(response.data.token, sessionStorage);
           }
-          this.token = response.data.token;
-          console.log(response.data.token);
+          debugger;
           return response.data as T;
         })
       )

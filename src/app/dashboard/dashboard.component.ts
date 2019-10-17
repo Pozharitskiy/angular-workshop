@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BoardService } from '../core/services/board.service';
-import { ApiService } from '../core/services/api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+
+import { catchError, retry, tap } from 'rxjs/operators';
+
+import { AuthService } from '../core/services/auth.service';
+import { ApiService } from '../core/services/api.service';
+import { BoardService } from '../core/services/board.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +26,8 @@ export class DashboardComponent implements OnInit {
     public route: ActivatedRoute,
     private boardService: BoardService,
     private fb: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -52,14 +57,18 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteBoard(id: string): void {
-    this.apiService.delete(id, 'board').subscribe(data => {
+    this.apiService.delete(id, 'boards').subscribe(data => {
       this.getBoards();
     });
   }
 
   getBoards(): void {
-    this.apiService.getBoards('boards').subscribe(data => {
-      this.boards = data;
+    this.authService.isAuthorizedSubject.subscribe(data => {
+      if (data) {
+        this.apiService.getBoards('boards').subscribe(data => {
+          this.boards = data;
+        });
+      }
     });
   }
 

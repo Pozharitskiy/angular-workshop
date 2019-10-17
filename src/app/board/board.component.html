@@ -5,7 +5,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="board_view">
-  <div class="scroll_container">
+  <div class="scroll_container" *ngIf="this.board">
     <div *ngFor="let column of this.board.columns" class="column">
       <mat-card class="board_column">
         <form [formGroup]="columnTitleForm" class="board_title">

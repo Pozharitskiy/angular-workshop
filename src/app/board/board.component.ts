@@ -79,11 +79,13 @@ export class BoardComponent implements OnInit {
     this.getBoard();
   }
 
-  deleteTask(id: string): void {
+  async deleteTask(id: string): Promise<Board> {
     this.apiService.delete(id, 'tasks').subscribe(data => {
       this.board = data;
+      this.getBoard();
     });
-    this.getBoard();
+
+    return this.board;
   }
 
   openTask(id: string, columnId: string): void {
