@@ -22,10 +22,10 @@ export class AuthService {
     private apiService: ApiService,
     private router: Router,
     private storageService: StorageAdapterService
-  ) {}
-
-  isAuthorized(): Observable<boolean> {
-    return this.isAuthorizedSubject.asObservable();
+  ) {
+    if (localStorage.getItem('token') || sessionStorage.getItem('token')) {
+      this.isAuthorizedSubject.next(true);
+    }
   }
 
   async login(email: string, password: string, rememberUserCheck: boolean) {
@@ -59,5 +59,9 @@ export class AuthService {
     });
     this.isAuthorizedSubject.next(true);
     this.router.navigate(['dashboard']);
+  }
+
+  isAuthorized(): Observable<boolean> {
+    return this.isAuthorizedSubject;
   }
 }
