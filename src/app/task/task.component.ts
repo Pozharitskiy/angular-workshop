@@ -66,8 +66,8 @@ export class TaskComponent implements OnInit {
     this.getTask();
   }
 
-  deleteComment(id: string) {
-    this.apiService.deleteComment(id, this.taskId).subscribe(data => data);
-    this.getTask();
-  }
+  // deleteComment(id: string) {
+  //   this.apiService.deleteComment(id, this.taskId).subscribe(data => data);
+  //   this.getTask();
+  // }
 }

@@ -76,12 +76,12 @@ export class ApiService {
       .pipe(map(res => res.data.board as Board));
   }
 
-  deleteComment(id: string, taskId: string): Observable<Task> {
-    return this.http.delete<Response>(`${APIUrl}/comments/${id}`, {
-      ...this.options,
-      body: { taskId: taskId }
-    });
-  }
+  // deleteComment(id: string, taskId: string): Observable<Task> {
+  //   return this.http.delete<Response>(`${APIUrl}/comments/${id}`, {
+  //     ...this.options,
+  //     body: { taskId: taskId }
+  //   });
+  // }
 
   getUser(email: string): Observable<User> {
     return this.http
