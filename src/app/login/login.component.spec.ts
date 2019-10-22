@@ -11,7 +11,6 @@ import { LoginComponent } from './login.component';
 import { AuthService } from '../core/services/auth.service';
 import { MockAuthService } from '../core/services/mock';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ApiService } from '../core/services/api.service';
 
 fdescribe('LoginComponent', () => {
   let component: LoginComponent;
@@ -43,18 +42,26 @@ fdescribe('LoginComponent', () => {
     mockAuthService = fixture.debugElement.injector.get(AuthService);
     component = fixture.componentInstance;
 
-    spyOn(mockAuthService, 'login').and.returnValue(
-      Promise.resolve(ApiService)
+    spyOn(mockAuthService, 'login').and.returnValue(Promise.resolve);
+    spyOn(mockAuthService, 'register').and.returnValue(Promise.resolve);
+    spyOn(component, 'getErrorMessage').and.returnValue(
+      'Must be at least 4 characters'
     );
-
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-    expect(mockAuthService.login).toHaveBeenCalled();
+  it('creation forms onInit', () => {
+    expect(component.loginForm && component.registerForm).toBeTruthy();
   });
-  it('login returns Promise', () => {
-    expect(mockAuthService.login());
+
+  it('login and register invokes promise', () => {
+    expect(mockAuthService.login()).toBeTruthy();
+    expect(mockAuthService.register()).toBeTruthy();
+  });
+
+  it('error', () => {
+    expect(component.getErrorMessage('123')).toBe(
+      'Must be at least 4 characters'
+    );
   });
 });
