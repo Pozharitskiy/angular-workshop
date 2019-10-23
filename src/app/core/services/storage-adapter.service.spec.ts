@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MockStorageService } from './mock';
-
 import { StorageAdapterService } from './storage-adapter.service';
 
 fdescribe('StorageAdapterService', () => {
@@ -17,8 +15,6 @@ fdescribe('StorageAdapterService', () => {
       providers: [StorageAdapterService]
     });
     storageService = TestBed.get(StorageAdapterService);
-
-    // spyOn(MockStorageService, 'getToken')
   });
 
   it('getToken() should return token as string', () => {

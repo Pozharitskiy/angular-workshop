@@ -14,7 +14,6 @@ export class TaskService {
   taskId: string;
   constructor(
     private apiService: ApiService,
-    private boardService: BoardService,
     private activatedRoute: ActivatedRoute
   ) {
     this.activatedRoute.params.pipe(map(path => path));
