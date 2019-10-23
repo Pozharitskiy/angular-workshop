@@ -1,0 +1,41 @@
+<div class="task_container" *ngIf="task">
+  <h1 class="task_title">{{ task.task }}</h1>
+  <div class="task_assingees" *ngFor="let user of users">user</div>
+  <div class="comments_container">
+    <div *ngFor="let comment of this.task.comments" class="task_comment">
+      <div class="task_comment__user">
+        <p>{{ comment.name }}</p>
+      </div>
+      <div class="task_comment__text">
+        <p>{{ comment.comment }}</p>
+      </div>
+      <div class="task_comment__date">
+        <p>{{ task.createdAt | date }}</p>
+      </div>
+      <div class="task_controls">
+        <mat-icon (click)="deleteComment(comment._id)">delete</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="create_comment__container">
+    <form [formGroup]="taskForm" class="create_comment__form">
+      <mat-form-field class="comment_text">
+        <input
+          #newComment
+          matInput
+          required
+          value=""
+          placeholder="your comment"
+          formControlName="title"
+        />
+      </mat-form-field>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="createComment(newComment.value, newComment.value)"
+      >
+        Push
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="fixed_overlay fixed_overlay__modal" [hidden]="!isModalOpened">
+  <div class="modal">
+    <div class="modal-content">
+      <h1 class="modal_title__header">Add new board</h1>
+      <form [formGroup]="addBoardForm" class="modal">
+        <mat-form-field>
+          <input
+            #boardName
+            matInput
+            required
+            placeholder="board name"
+            formControlName="title"
+          />
+        </mat-form-field>
+      </form>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="addBoard(boardName.value)"
+        class="board_open__btn"
+      >
+        Add board
+      </button>
+    </div>
+  </div>
+</div>

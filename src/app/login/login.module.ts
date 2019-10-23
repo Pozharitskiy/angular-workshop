@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
 import { LoginComponent } from './login.component';
 import { SharedModule } from '../shared/shared.module';
 import { LoginRoutingModule } from './login-routing.module';
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -17,10 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
     SharedModule,
     LoginRoutingModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatButtonModule
+    HttpClientModule
   ]
 })
 export class LoginModule {}

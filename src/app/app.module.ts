@@ -2,23 +2,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
-import { LoginModule } from './login/login.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+
 import { AppHttpInterceptor } from './core/services/http.interceptor';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     CommonModule,
-    LoginModule,
     AppRoutingModule,
     RouterModule,
-    SharedModule
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [
     {

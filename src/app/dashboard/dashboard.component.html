@@ -1,1 +1,90 @@
-<p>qwe</p>
+<div class="container">
+  <mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+      <span>Trollo</span>
+      <mat-icon>build</mat-icon>
+      <span class="welcome_message">Welcome back, {{ userName }}</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="content">
+    <mat-card class="board" *ngFor="let board of boards">
+      <form [formGroup]="boardTitleForm" class="board_title">
+        <mat-form-field class="board_title__input">
+          <input
+            #boardTitle
+            matInput
+            required
+            value="{{ board.title }}"
+            formControlName="title"
+          />
+        </mat-form-field>
+        <mat-icon class="rename_btn" (click)="openInput()">edit</mat-icon>
+      </form>
+      <div class="board_controls">
+        <button
+          mat-flat-button
+          color="accent"
+          (click)="updateBoard(board._id, boardTitle.value)"
+        >
+          Rename
+        </button>
+        <button mat-flat-button color="warn" (click)="deleteBoard(board._id)">
+          Delete
+        </button>
+      </div>
+      <div class="board_users">
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-description>
+              Users:
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngFor="let user of board.users" class="board_users__item">
+            {{ user.name }}
+          </div>
+        </mat-expansion-panel>
+      </div>
+      <a
+        mat-flat-button
+        color="primary"
+        class="board_open__btn"
+        routerLink="/board/{{ board._id }}"
+      >
+        Open board
+      </a>
+    </mat-card>
+    <mat-icon class="add_board__btn" (click)="openModal()">add</mat-icon>
+  </div>
+</div>
+
+<div class="fixed_overlay fixed_overlay__modal" [hidden]="!isModalOpened">
+  <div class="modal">
+    <mat-icon class="close_modal__btn" (click)="hideModal()">close</mat-icon>
+    <div class="modal-content">
+      <h1 class="modal_title__header">Add new board</h1>
+      <form [formGroup]="addBoardForm" class="modal">
+        <mat-form-field class="board_name__modal">
+          <input
+            #boardName
+            matInput
+            required
+            placeholder="board name"
+            formControlName="title"
+          />
+        </mat-form-field>
+      </form>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="addBoard(boardName.value)"
+        class="board_open__btn"
+      >
+        Add board
+      </button>
+    </div>
+  </div>
+</div>

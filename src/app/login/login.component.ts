@@ -11,8 +11,6 @@ import { AuthService } from '../core/services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
-  error: boolean;
-  success: boolean;
 
   constructor(private authService: AuthService, private fb: FormBuilder) {}
 
@@ -29,28 +27,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(
-    loginEmail: string,
-    loginPassword: string,
-    rememberUser: boolean
-  ): void {
+  login(loginEmail: string, loginPassword: string, rememberUser: boolean) {
     rememberUser = this.loginForm.value.rememberUser;
     this.authService.login(loginEmail, loginPassword, rememberUser);
-    if (Error) {
-      this.error = true;
-    }
   }
 
   register(userName: string, registerEmail: string, registerPassword: string) {
     this.authService.register(userName, registerEmail, registerPassword);
-    if (Error) {
-      this.error = true;
-    }
   }
 
   getErrorMessage(controlName: string) {
     if (this.loginForm.controls[controlName].hasError('minlength')) {
-      return 'Must be at least 2 characters';
+      return 'Must be at least 4 characters';
     }
     return 'Type your pass here';
   }
