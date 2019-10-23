@@ -70,18 +70,17 @@ export class ApiService {
       .toPromise();
   }
 
-  delete(id: string, type: string): Observable<Board> {
+  delete(id: string, type: string, body?: any): Observable<Board> {
+    if (body) {
+      const options = { ...this.options, body: { taskId: body } };
+      return this.http
+        .delete<Response>(`${APIUrl}/${type}/${id}`, options)
+        .pipe(map(res => res.data.board as Board));
+    }
     return this.http
       .delete<Response>(`${APIUrl}/${type}/${id}`, this.options)
       .pipe(map(res => res.data.board as Board));
   }
-
-  // deleteComment(id: string, taskId: string): Observable<Task> {
-  //   return this.http.delete<Response>(`${APIUrl}/comments/${id}`, {
-  //     ...this.options,
-  //     body: { taskId: taskId }
-  //   });
-  // }
 
   getUser(email: string): Observable<User> {
     return this.http

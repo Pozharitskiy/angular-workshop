@@ -22,7 +22,6 @@ export class StorageAdapterService {
 
   defineStorage(): any {
     if (localStorage.getItem('token')) {
-      console.log(localStorage);
       return localStorage;
     } else return sessionStorage;
   }

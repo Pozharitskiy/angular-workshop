@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SpinnerService } from './core/services/spinner.service';
 import { Observable } from 'rxjs';
 
