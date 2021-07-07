@@ -6,8 +6,8 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 
-import { Observable, merge, BehaviorSubject } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 
 import { APIUrl } from './constants';
@@ -15,7 +15,6 @@ import { Response } from '../models/response.model';
 import { StorageAdapterService } from './storage-adapter.service';
 import { Board } from '../models/board.model';
 import { User } from '../models/user.model';
-import { Task } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,23 +69,28 @@ export class ApiService {
       .toPromise();
   }
 
-  delete(id: string, type: string): Observable<Board> {
+  delete(id: string, type: string, body?: any): Observable<Board> {
+    if (body) {
+      const options = { ...this.options, body: { taskId: body } };
+      return this.http
+        .delete<Response>(`${APIUrl}/${type}/${id}`, options)
+        .pipe(map(res => res.data.board as Board));
+    }
     return this.http
       .delete<Response>(`${APIUrl}/${type}/${id}`, this.options)
       .pipe(map(res => res.data.board as Board));
   }
 
-  // deleteComment(id: string, taskId: string): Observable<Task> {
-  //   return this.http.delete<Response>(`${APIUrl}/comments/${id}`, {
-  //     ...this.options,
-  //     body: { taskId: taskId }
-  //   });
-  // }
-
   getUser(email: string): Observable<User> {
     return this.http
       .get<Response>(`${APIUrl}/users/?email=${email}`, this.options)
       .pipe(map(res => res.data.user.name as User));
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http
+      .get<Response>(`${APIUrl}/users`, this.options)
+      .pipe(map(res => res.data.users as User[]));
   }
 
   getBoards(path: string): Observable<Board[]> {

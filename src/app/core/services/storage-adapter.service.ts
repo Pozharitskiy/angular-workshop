@@ -20,10 +20,6 @@ export class StorageAdapterService {
     storage.removeItem('token');
   }
 
-  checkData(id, storage): string {
-    return storage.getItem(id);
-  }
-
   defineStorage(): any {
     if (localStorage.getItem('token')) {
       return localStorage;

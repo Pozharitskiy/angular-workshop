@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../core/services/auth.service';
@@ -27,12 +27,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(loginEmail: string, loginPassword: string, rememberUser: boolean) {
+  login(
+    loginEmail: string,
+    loginPassword: string,
+    rememberUser: boolean
+  ): void {
     rememberUser = this.loginForm.value.rememberUser;
     this.authService.login(loginEmail, loginPassword, rememberUser);
   }
 
-  register(userName: string, registerEmail: string, registerPassword: string) {
+  register(
+    userName: string,
+    registerEmail: string,
+    registerPassword: string
+  ): void {
     this.authService.register(userName, registerEmail, registerPassword);
   }
 

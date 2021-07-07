@@ -18,5 +18,13 @@ export class MockBoardService {
 export class MockAuthService {
   login() {}
   register() {}
-  isAuthorized() {}
+  getErrorMessage() {}
+}
+
+export class MockStorageService {
+  getToken() {}
+  setToken() {}
+  resetToken() {}
+  checkData() {}
+  defineStorage() {}
 }

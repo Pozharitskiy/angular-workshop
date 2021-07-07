@@ -55,7 +55,7 @@ export class TaskComponent implements OnInit {
       });
   }
 
-  createComment(text: string, value: string) {
+  createComment(text: string) {
     this.apiService.addComment(
       this.taskId,
       localStorage.getItem('user name'),
@@ -66,8 +66,8 @@ export class TaskComponent implements OnInit {
     this.getTask();
   }
 
-  // deleteComment(id: string) {
-  //   this.apiService.deleteComment(id, this.taskId).subscribe(data => data);
-  //   this.getTask();
-  // }
+  deleteComment(id: string) {
+    this.apiService.delete(id, 'comments', this.taskId).subscribe(data => data);
+    this.getTask();
+  }
 }
